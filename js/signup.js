@@ -1,6 +1,10 @@
 import { validObject } from "./signupValid.js";
 
-if (localStorage.getItem("signupToken")) location.href = "./folder";
+try {
+  if (localStorage.getItem("signupToken")) location.href = "./folder";
+} catch (e) {
+  console.log(e);
+}
 
 export const formState = {
   email: {
