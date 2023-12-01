@@ -12,19 +12,18 @@ export function Main() {
         "https://bootcamp-api.codeit.kr/api/sample/folder"
       );
       const result = await response.json();
-      const linksData = [...result.folder.links];
+      const linksData = result.folder.links;
       const foldersData = result.folder;
-      const ownderData = { ...result.folder.owner };
+      const ownerData = result.folder.owner;
       setFolderDatas(foldersData);
       setLinks(linksData);
-      setOwnerDatas(ownderData);
+      setOwnerDatas(ownerData);
     } catch (e) {
       console.log(`getLinks에서 ${e} 오류`);
     }
   };
   useEffect(() => {
     getLinks();
-    console.log("useEffect실행");
   }, []);
 
   return (
@@ -34,6 +33,7 @@ export function Main() {
           <img
             className="main-header_profile_img"
             src={ownerDatas.profileImageSource}
+            alt="profile_img"
           />
           <div className="main-header_profile_name">@{ownerDatas.name}</div>
         </div>
@@ -45,7 +45,7 @@ export function Main() {
           {links.map((link) => {
             return (
               <>
-                <Card link={link} />
+                <Card key={link.id} link={link} />
               </>
             );
           })}
