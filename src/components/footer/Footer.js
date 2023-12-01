@@ -1,10 +1,14 @@
 import "./Footer.css";
 import Sns from "./Sns.js";
+import facebook from "../../assets/footer/facebook.png";
+import twitter from "../../assets/footer/twitter.png";
+import instagram from "../../assets/footer/instagram.png";
+import youtube from "../../assets/footer/youtube.png";
+
 export function Footer() {
   const getThisYear = () => {
     const date = new Date();
     const thisYear = date.getFullYear();
-    console.log(thisYear);
     return thisYear;
   };
   const footerSnsDatas = [
@@ -13,6 +17,14 @@ export function Footer() {
     { name: "youtube", url: "https://www.youtube.com" },
     { name: "instagram", url: "https://www.instagram.com" },
   ];
+
+  const imageMap = {
+    facebook,
+    twitter,
+    instagram,
+    youtube,
+  };
+
   return (
     <>
       <div className="footer-wrapper">
@@ -29,7 +41,11 @@ export function Footer() {
           {footerSnsDatas.map((data) => {
             return (
               <>
-                <Sns footerSnsData={data} />
+                <Sns
+                  key={data.name}
+                  footerSnsData={data}
+                  imageMap={imageMap[data.name]}
+                />
               </>
             );
           })}
