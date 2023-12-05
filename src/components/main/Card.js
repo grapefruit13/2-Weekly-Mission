@@ -74,8 +74,8 @@ export function Card({ link }) {
   useEffect(() => {
     calCreatedDates();
   }, [createdAt]);
+
   useEffect(() => {
-    // calCreatedDates();
     calCreatedAt();
   }, [createdDates]);
 

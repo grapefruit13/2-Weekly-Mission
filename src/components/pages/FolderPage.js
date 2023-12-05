@@ -1,16 +1,16 @@
 import { useEffect, useState } from "react";
-import { Footer } from "../footer/Footer.js";
 import { getData } from "../api/api";
+import { Footer } from "../footer/Footer.js";
 import AddLink from "../header/AddLink.js";
 import Header from "../header/Header.js";
 import Folders from "../main/Folders.js";
 import SearchBar from "../main/SearchBar.js";
 import CardWrapper from "../main/CardWrapper.js";
 import FolderOptions from "../main/FolderOptions.js";
+import Nolinks from "../error/NoLinks.js";
 import add from "../../assets/add.svg";
 import "../main/Main.css";
 import "../main/Responsive.css";
-import Nolinks from "../error/NoLinks.js";
 
 function FolderPage() {
   const [profileDatas, setProfileDatas] = useState({
@@ -141,11 +141,11 @@ function FolderPage() {
                 )}
               </div>
               <div className="folder-add-button">
-                <img src={add} />
+                <img src={add} alt="plus-button" />
               </div>
             </div>
             <div className="current-folder-option-wrapper">
-              <div class="current-folder-name">{currentFolderName}</div>
+              <div className="current-folder-name">{currentFolderName}</div>
               {currentFolderName === "전체" ? "" : <FolderOptions />}
             </div>
             {!links.length ? (

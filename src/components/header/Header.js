@@ -11,6 +11,7 @@ export function Header({ profileDatas }) {
             <img
               className="header-profile_profile-img"
               src={profileDatas.profileImageSource || profileDatas.image_source}
+              alt={profileDatas.name}
             />
             <p className="header-profile_profile-name">{profileDatas.email}</p>
           </div>
