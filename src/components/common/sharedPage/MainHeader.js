@@ -1,8 +1,8 @@
 function MainHeader({ ownerDatas, folderDatas }) {
   return (
     <>
-      <div class="main-header">
-        <div class="main-hearder_profile">
+      <div className="main-header">
+        <div className="main-hearder_profile">
           <img
             className="main-header_profile_img"
             src={ownerDatas.profileImageSource}

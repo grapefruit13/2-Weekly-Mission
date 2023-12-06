@@ -1,6 +1,6 @@
-import share from "../../assets/option/share.svg";
-import pen from "../../assets/option/pen.svg";
-import trashCan from "../../assets/option/trash-can.svg";
+import share from "../../../assets/icons/option/share.svg";
+import pen from "../../../assets/icons/option/pen.svg";
+import trashCan from "../../../assets/icons/option/trash-can.svg";
 import Option from "./Option";
 
 export function FolderOptions() {

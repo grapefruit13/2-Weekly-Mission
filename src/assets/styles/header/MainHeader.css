@@ -1,0 +1,41 @@
+.main-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+  padding-top: 1.25rem;
+  padding-bottom: 3.75rem;
+  background: var(--linkbrary-bg, #f0f6ff);
+}
+.main-header_profile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+.main-header_profile_img {
+  width: 3.75rem;
+  height: 3.75rem;
+}
+
+.main-header_profile_name {
+  color: var(--text-color-light-mode, #000);
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5rem;
+}
+
+.main-header_folder-name {
+  color: #000;
+  text-align: center;
+  font-feature-settings: "clig" off, "liga" off;
+  font-size: 2.5rem;
+  font-weight: 600;
+}
+
+.main-wrapper {
+  width: 66.25rem;
+  padding-top: 2.5rem;
+  padding-bottom: 6.25rem;
+  margin: auto;
+}

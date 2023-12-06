@@ -1,6 +1,6 @@
 import LoginButton from "./LoginButton";
 import Logo from "./Logo";
-import "./Header.css";
+import "../../assets/styles/header/Header.css";
 export function Header({ profileDatas }) {
   return (
     <div className="header">

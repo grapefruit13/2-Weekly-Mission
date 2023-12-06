@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import "./Card.css";
-import NoImg from "../../assets/card_no-img.svg";
-import kebab from "../../assets/card/kebab.svg";
+import "../../assets/styles/card/Card.css";
+import "../../assets/styles/card/CardWrapper.css";
+import NoImg from "../../assets/icons/card/card_no-img.svg";
+import kebab from "../../assets/icons/card/kebab.svg";
 import CardInfo from "./CardInfo";
 
 export function Card({ link }) {
@@ -47,17 +48,17 @@ export function Card({ link }) {
     if (months > 23) {
       setMins(`${Math.floor(months / 12)} years ago`);
     } else if (months >= 12) {
-      setMins(`1 year ago`);
+      setMins("1 year ago");
     } else if (days > 30) {
       setMins(`${months} month ago`);
     } else if (days <= 30) {
       setMins(`${days} days ago`);
     } else if (hours >= 24) {
-      setMins(`1 day ago`);
+      setMins("1 day ago");
     } else if (hours <= 23) {
       setMins(`${hours} hours ago`);
     } else if (minutes >= 60) {
-      setMins(`1 hour ago`);
+      setMins("1 hour ago");
     } else if (minutes <= 59) {
       setMins({ minutes } + "minutes ago");
     } else if (minutes < 2) {
@@ -81,7 +82,7 @@ export function Card({ link }) {
 
   return (
     <>
-      <a target="_blank" href={url}>
+      <a target="_blank" href={url} rel="noreferrer">
         <div className="flex-wrapper" id={`card-${id}`}>
           <div className="card-img_wrapper">
             {imageSource ? (

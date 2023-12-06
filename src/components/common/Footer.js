@@ -1,9 +1,9 @@
-import "./Footer.css";
+import "../../assets/styles/footer/Footer.css";
 import Sns from "./Sns.js";
-import facebook from "../../assets/footer/facebook.png";
-import twitter from "../../assets/footer/twitter.png";
-import instagram from "../../assets/footer/instagram.png";
-import youtube from "../../assets/footer/youtube.png";
+import facebook from "../../assets/icons/footer/facebook.png";
+import twitter from "../../assets/icons/footer/twitter.png";
+import instagram from "../../assets/icons/footer/instagram.png";
+import youtube from "../../assets/icons/footer/youtube.png";
 
 export function Footer() {
   const getThisYear = () => {

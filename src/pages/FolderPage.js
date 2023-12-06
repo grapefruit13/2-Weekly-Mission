@@ -1,16 +1,16 @@
 import { useEffect, useState } from "react";
-import { getData } from "../api/api";
-import { Footer } from "../footer/Footer.js";
-import AddLink from "../header/AddLink.js";
-import Header from "../header/Header.js";
-import Folders from "../main/Folders.js";
-import SearchBar from "../main/SearchBar.js";
-import CardWrapper from "../main/CardWrapper.js";
-import FolderOptions from "../main/FolderOptions.js";
-import Nolinks from "../error/NoLinks.js";
-import add from "../../assets/add.svg";
-import "../main/Main.css";
-import "../main/Responsive.css";
+import { getData } from "../utils/api.js";
+import { Footer } from "../components/common/Footer.js";
+import AddLink from "../components/common/folderPage/AddLink.js";
+import Header from "../components/common/Header.js";
+import Folders from "../components/common/folderPage/Folders.js";
+import SearchBar from "../components/common/SearchBar.js";
+import CardWrapper from "../components/common/CardWrapper.js";
+import FolderOptions from "../components/common/folderPage/FolderOptions.js";
+import Nolinks from "../components/common/folderPage/NoLinks.js";
+import add from "../assets/icons/card/add.svg";
+import "../assets/styles/header/MainHeader.css";
+import "../assets/styles/Responsive.css";
 
 function FolderPage() {
   const [profileDatas, setProfileDatas] = useState({
