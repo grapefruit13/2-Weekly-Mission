@@ -1,4 +1,5 @@
 import logo from "../../assets/icons/header/logo.png";
+
 export function Logo() {
   return (
     <>

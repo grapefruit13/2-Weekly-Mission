@@ -66,7 +66,6 @@ function FolderPage() {
     try {
       const result = await getData("users/1/folders");
       const { data } = result;
-      console.log(data);
       data.unshift({ name: "전체" });
       setFolderLists(data);
     } catch (e) {
@@ -92,7 +91,6 @@ function FolderPage() {
     setCurrentFolderName(e.target.textContent);
     if (e.target.textContent === "전체") {
       getTotalLinksData();
-
       return;
     }
     const clikedFolder = folderLists.filter(

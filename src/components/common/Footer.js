@@ -1,6 +1,7 @@
 import "../../assets/styles/footer/Footer.css";
 import Sns from "./Sns.js";
 import FooterSnsDatas from "./FooterSnsDatas.jsx";
+
 export function Footer() {
   const getThisYear = () => {
     const date = new Date();

@@ -1,7 +1,7 @@
-import Header from "../components/common/Header.js";
-import Footer from "../components/common/Footer.js";
 import { useEffect, useState } from "react";
 import { getData } from "../utils/api.js";
+import Header from "../components/common/Header.js";
+import Footer from "../components/common/Footer.js";
 import MainHeader from "../components/common/sharedPage/MainHeader.js";
 import SearchBar from "../components/common/SearchBar.js";
 import CardWrapper from "../components/common/CardWrapper.js";

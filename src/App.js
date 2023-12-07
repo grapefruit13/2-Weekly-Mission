@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { lazy } from "react";
+
 const SharedPage = lazy(() => import("./pages/SharedPage"));
 const FolderPage = lazy(() => import("./pages/FolderPage"));
 const ErrorPage = lazy(() => import("./pages/ErrorPage"));

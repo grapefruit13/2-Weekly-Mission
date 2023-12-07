@@ -29,9 +29,11 @@ export function Card({ link }) {
   function onMouseEnterHandler() {
     setIsHovered(true);
   }
+
   function onMouseLeaveHandler() {
     setIsHovered(false);
   }
+
   useEffect(() => {
     getCreatedDates();
   }, [createdAt]);

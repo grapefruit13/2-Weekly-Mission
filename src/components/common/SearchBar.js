@@ -1,4 +1,5 @@
 import "../../assets/styles/search/SearchBar.css";
+
 export function SearchBar() {
   return (
     <>
