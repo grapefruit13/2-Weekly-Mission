@@ -1,12 +1,12 @@
-const BASE_URL = "https://bootcamp-api.codeit.kr/api";
+import axios from "axios";
+
+axios.defaults.baseURL = "https://bootcamp-api.codeit.kr/api";
 
 export async function getData(url) {
-  const response = await fetch(`${BASE_URL}/${url}`);
-  if (!response.ok) {
-    throw new Error(
-      `${BASE_URL}/${url}에서 데이터를 받아오는 데 실패했습니다.`
-    );
+  try {
+    const response = await axios.get(`${url}`);
+    return response.data;
+  } catch (e) {
+    console.log(`getData에서 ${e} 발생`);
   }
-  const result = await response.json();
-  return result;
 }
