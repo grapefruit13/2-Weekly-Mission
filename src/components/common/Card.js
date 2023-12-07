@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { calCreatedAt, calCreatedDates } from "../../utils/date";
 import "../../assets/styles/card/Card.css";
 import "../../assets/styles/card/CardWrapper.css";
 import NoImg from "../../assets/icons/card/card_no-img.svg";
@@ -11,59 +12,18 @@ export function Card({ link }) {
   const [createdDates, setCreatedDates] = useState({});
   const [isHovered, setIsHovered] = useState(false);
 
-  function calCreatedDates() {
-    const splited = createdAt.split("T").slice(0, 1);
-    const yearMonthDay = splited[0].split("-");
-
+  function getCreatedDates() {
+    const { year, month, day } = calCreatedDates(createdAt);
     setCreatedDates((prev) => ({
       ...prev,
-      year: yearMonthDay[0],
-      month: yearMonthDay[1],
-      day: yearMonthDay[2],
+      year: year,
+      month: month,
+      day: day,
     }));
   }
 
-  function calCreatedAt() {
-    const now = new Date();
-
-    const createdDate = new Date(
-      createdDates.year,
-      Number(createdDates.month) * 1 - 1,
-      createdDates.day
-    );
-
-    const diffMSec = now.getTime() - createdDate.getTime();
-    const MIN = 1000 * 60;
-    const HOUR = MIN * 60;
-    const DAY = HOUR * 24;
-    const MONTH = DAY * 30;
-
-    const calTime = (diffMSec, time) => Math.floor(diffMSec / time);
-
-    const minutes = calTime(diffMSec, MIN);
-    const hours = calTime(diffMSec, HOUR);
-    const days = calTime(diffMSec, DAY);
-    const months = calTime(diffMSec, MONTH);
-
-    if (months > 23) {
-      setMins(`${Math.floor(months / 12)} years ago`);
-    } else if (months >= 12) {
-      setMins("1 year ago");
-    } else if (days > 30) {
-      setMins(`${months} month ago`);
-    } else if (days <= 30) {
-      setMins(`${days} days ago`);
-    } else if (hours >= 24) {
-      setMins("1 day ago");
-    } else if (hours <= 23) {
-      setMins(`${hours} hours ago`);
-    } else if (minutes >= 60) {
-      setMins("1 hour ago");
-    } else if (minutes <= 59) {
-      setMins({ minutes } + "minutes ago");
-    } else if (minutes < 2) {
-      setMins("1 minute ago");
-    }
+  function getCreatedAt() {
+    setMins(calCreatedAt(createdDates));
   }
 
   function onMouseEnterHandler() {
@@ -73,11 +33,11 @@ export function Card({ link }) {
     setIsHovered(false);
   }
   useEffect(() => {
-    calCreatedDates();
+    getCreatedDates();
   }, [createdAt]);
 
   useEffect(() => {
-    calCreatedAt();
+    getCreatedAt();
   }, [createdDates]);
 
   return (
