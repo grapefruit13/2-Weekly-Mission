@@ -12,7 +12,7 @@ function SharedPage() {
     id: 0,
     name: "",
     email: "",
-    profileImageSource: "",
+    image_source: "",
   });
 
   const [folderDatas, setFolderDatas] = useState({});
@@ -22,14 +22,13 @@ function SharedPage() {
   const getSampleUserData = async () => {
     try {
       const response = await getData("sample/user");
-      // console.log(response, "Header");
       const { id, name, email, profileImageSource } = response;
       setProfileDatas((prevProfileDatas) => ({
         ...prevProfileDatas,
         id: id,
         name: name,
         email: email,
-        profileImageSource: profileImageSource,
+        image_source: profileImageSource,
       }));
     } catch (e) {
       console.log(e);
@@ -38,7 +37,6 @@ function SharedPage() {
   const getLinks = async () => {
     try {
       const result = await getData("sample/folder");
-      // console.log("Main", result);
       const linksData = result.folder.links;
       const foldersData = result.folder;
       const ownerData = result.folder.owner;
