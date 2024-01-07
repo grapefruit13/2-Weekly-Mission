@@ -22,7 +22,7 @@
   object-fit: cover;
 }
 
-.info-wrapper {
+/* .info-wrapper {
   display: flex;
   flex-direction: column;
   text-align: left;
@@ -30,7 +30,7 @@
   gap: 0.62rem;
   padding: 15px 20px;
   height: 135px;
-}
+} */
 
 .times-ago-wrapper {
   display: flex;
