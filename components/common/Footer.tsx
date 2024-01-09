@@ -3,7 +3,7 @@ import FooterSnsDatas from './FooterSnsDatas';
 import styles from '@/styles/footer/footer.module.css';
 import Link from 'next/link';
 
-export function Footer() {
+export default function Footer() {
   const getThisYear = () => {
     const date = new Date();
     const thisYear = date.getFullYear();
@@ -35,5 +35,3 @@ export function Footer() {
     </>
   );
 }
-
-export default Footer;

@@ -1,8 +1,9 @@
 import Image from 'next/image';
-import { useContext } from 'react';
+import { useContext, useReducer } from 'react';
 import Dropdown from './folderPage/Dropdown';
 import KebabContext from '../../contexts/KebabContext';
 import styles from '@/styles/card/card.module.css';
+import { useRouter } from 'next/router';
 
 interface Props {
   mins: string;
@@ -24,9 +25,12 @@ export default function CardInfo({
   createdDates,
 }: Props) {
   const { setIsKebabClicked, isKebabClicked } = useContext(KebabContext);
+  const router = useRouter();
 
   const handleKebabClick = () => {
-    setIsKebabClicked((prev: boolean) => !prev);
+    if (router.pathname !== '/') {
+      setIsKebabClicked((prev: boolean) => !prev);
+    }
   };
 
   return (
@@ -39,7 +43,7 @@ export default function CardInfo({
           src={imgSrc}
           alt="kebab"
           onClick={handleKebabClick}
-          style={{ cursor: 'pointer' }}
+          style={router.pathname !== '/' ? { cursor: 'pointer' } : undefined}
         />
         {isKebabClicked && <Dropdown />}
       </div>

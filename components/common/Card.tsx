@@ -1,6 +1,6 @@
+import { useContext, useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { useContext, useEffect, useState } from 'react';
 import { calCreatedAt, calCreatedDates } from '../../utils/date';
 import { KebabContextProvider } from '../../contexts/KebabContext';
 import CardContext from '../../contexts/CardContext';
@@ -8,9 +8,6 @@ import NoImg from '@/public/assets/icons/card/card_no-img.svg';
 import kebab from '@/public/assets/icons/card/kebab.svg';
 import CardInfo from './CardInfo';
 import styles from '@/styles/card/card.module.css';
-// import '@/styles/card/Card.css';
-// import '@/styles/card/CardWrapper.css';
-
 interface Props {
   id: string;
   createdAt: string;

@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useState } from 'react';
 
 const KebabContext = createContext();
 
@@ -9,6 +9,10 @@ export function KebabContextProvider({ children }) {
     addToFolder: false,
   });
 
+  const closeKebab = () => {
+    setClickedKebabOption({ delete: false, addToFolder: false });
+  };
+
   return (
     <KebabContext.Provider
       value={{
@@ -16,6 +20,7 @@ export function KebabContextProvider({ children }) {
         setIsKebabClicked,
         clickedKebabOption,
         setClickedKebabOption,
+        closeKebab,
       }}
     >
       {children}

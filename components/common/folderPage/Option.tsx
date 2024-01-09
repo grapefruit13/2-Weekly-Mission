@@ -1,7 +1,6 @@
 import { useContext } from 'react';
-import styled from 'styled-components';
-import FolderContext from '../../../contexts/FolderContext';
 import Image from 'next/image';
+import FolderContext from '../../../contexts/FolderContext';
 import styles from '@/styles/card/cardWrapper.module.css';
 
 interface Props {
@@ -10,7 +9,7 @@ interface Props {
   img: any;
 }
 
-export function Option({ optionData }: { optionData: Props }) {
+export default function Option({ optionData }: { optionData: Props }) {
   const { name, img } = optionData;
   const { setClickedOption } = useContext(FolderContext);
 
@@ -33,5 +32,3 @@ export function Option({ optionData }: { optionData: Props }) {
     </button>
   );
 }
-
-export default Option;

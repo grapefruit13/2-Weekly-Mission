@@ -1,15 +1,15 @@
-import { createContext, useState } from "react";
+import { createContext, useState } from 'react';
 
 const CardContext = createContext();
 
 export function CardContextProvider({ children }) {
   const [linkInfo, setLinkInfo] = useState({
-    id: "",
-    createdAt: "",
-    url: "",
-    title: "",
-    description: "",
-    imageSource: "",
+    id: '',
+    createdAt: '',
+    url: '',
+    title: '',
+    description: '',
+    imageSource: '',
   });
 
   return (

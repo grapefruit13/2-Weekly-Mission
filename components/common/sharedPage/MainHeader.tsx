@@ -14,7 +14,7 @@ interface FolderProps {
   links?: {}[];
 }
 
-function MainHeader({
+export default function MainHeader({
   ownerDatas,
   folderDatas,
 }: {
@@ -39,5 +39,3 @@ function MainHeader({
     </>
   );
 }
-
-export default MainHeader;

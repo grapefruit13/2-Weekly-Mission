@@ -1,36 +1,8 @@
-import styled from 'styled-components';
+import Image from 'next/image';
 import Kakao from '/public/assets/icons/modal/kakao.svg';
 import Facebook from '/public/assets/icons/modal/facebook.svg';
 import Share from '/public/assets/icons/modal/share.svg';
-import Image from 'next/image';
-
-const Container = styled.div`
-  display: flex;
-  justify-content: center;
-  gap: 32px;
-`;
-
-const IconContainer = styled.button`
-  margin: auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-  background: inherit;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-  margin: 0;
-`;
-
-const Title = styled.div`
-  color: var(--Linkbrary-gray100, #373740);
-  text-align: center;
-  font-family: Inter;
-  font-size: 13px;
-  font-weight: 400;
-  line-height: 15px;
-`;
+import styles from '@/styles/folderPage/modal/iconsBox.module.css';
 
 export default function IconsBox() {
   const currentURL = window.location.href;
@@ -45,28 +17,28 @@ export default function IconsBox() {
 
   return (
     <>
-      <Container>
-        <IconContainer>
+      <div className={styles.container}>
+        <div className={styles.iconContainer}>
           <Image src={Kakao} width={20} height={20} alt="kakao-icon" />
-          <Title>카카오톡</Title>
-        </IconContainer>
-        <IconContainer>
-          <Image src={Share} width={20} height={20} alt="share-icon" />
-          <Title>페이스북</Title>
-        </IconContainer>
-        <IconContainer>
+          <span className={styles.title}>카카오톡</span>
+        </div>
+        <div className={styles.iconContainer}>
+          <Image src={Facebook} width={20} height={20} alt="facebook-icon" />
+          <span className={styles.title}>페이스북</span>
+        </div>
+        <div className={styles.iconContainer}>
           <Image
-            src={Facebook}
+            src={Share}
             width={20}
             height={20}
-            alt="facebook-icon"
+            alt="share-icon"
             onClick={() => {
               handleCopyClipBoard(currentURL);
             }}
           />
-          <Title>링크 복사</Title>
-        </IconContainer>
-      </Container>
+          <span className={styles.title}>링크 복사</span>
+        </div>
+      </div>
     </>
   );
 }

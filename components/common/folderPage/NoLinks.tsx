@@ -4,8 +4,6 @@ interface Props {
   msg: string;
 }
 
-export function Nolinks({ msg }: Props) {
+export default function Nolinks({ msg }: Props) {
   return <div className={styles.noLinks}>{msg}</div>;
 }
-
-export default Nolinks;

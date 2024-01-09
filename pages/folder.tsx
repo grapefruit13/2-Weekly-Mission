@@ -1,6 +1,7 @@
-import FolderContext from '@/contexts/FolderContext';
 import { useContext, useEffect, useState } from 'react';
+import Image from 'next/image';
 import { getData } from '@/utils/api';
+import FolderContext from '@/contexts/FolderContext';
 import Modal from '@/components/common/folderPage/modal/Modal';
 import Header from '@/components/common/Header';
 import AddLink from '@/components/common/folderPage/AddLink';
@@ -9,13 +10,16 @@ import Folders from '@/components/common/folderPage/Folders';
 import FolderOptions from '@/components/common/folderPage/FolderOptions';
 import Nolinks from '@/components/common/folderPage/NoLinks';
 import CardWrapper from '@/components/common/CardWrapper';
-import Footer from '@/components/common/Footer';
-import Image from 'next/image';
 import styles from '@/styles/card/cardWrapper.module.css';
 
 export default function Folder() {
-  const { addedLink, clickedOption, setClickedOption } =
-    useContext(FolderContext);
+  const {
+    addedLink,
+    clickedOption,
+    setClickedOption,
+    folderLists,
+    setFolderLists,
+  } = useContext(FolderContext);
   const [profileDatas, setProfileDatas] = useState({
     id: 0,
     created_at: '',
@@ -25,7 +29,6 @@ export default function Folder() {
     auth_id: '',
   });
   const [links, setLinks] = useState([]);
-  const [folderLists, setFolderLists] = useState([{ name: '전체' }]);
   const [currentFolderId, setCurrentFolderId] = useState('');
   const [currentFolderName, setCurrentFolderName] = useState<string>('전체');
 
@@ -157,7 +160,7 @@ export default function Folder() {
             <div className={styles.folderAddContainer}>
               <div className={styles.folderWrapper}>
                 {folderLists ? (
-                  folderLists.map((folder: any, i) => {
+                  folderLists.map((folder: any, i: number) => {
                     return (
                       <div key={`folder-${i}`} onClick={handleFolderClick}>
                         <Folders

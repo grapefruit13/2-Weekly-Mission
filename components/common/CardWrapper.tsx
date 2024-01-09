@@ -13,7 +13,7 @@ interface Props {
   }[];
 }
 
-export function CardWrapper({ links }: Props) {
+export default function CardWrapper({ links }: Props) {
   return (
     <div className={styles.wrapper}>
       {links.map((link) => {
@@ -28,5 +28,3 @@ export function CardWrapper({ links }: Props) {
     </div>
   );
 }
-
-export default CardWrapper;

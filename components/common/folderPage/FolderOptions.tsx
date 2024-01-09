@@ -4,7 +4,7 @@ import trashCan from '/public/assets/icons/option/trash-can.svg';
 import Option from './Option';
 import styles from '@/styles/card/cardWrapper.module.css';
 
-export function FolderOptions() {
+export default function FolderOptions() {
   const optionDatas = [
     { id: 1, name: '공유', img: share },
     { id: 2, name: '이름 변경', img: pen },
@@ -23,5 +23,3 @@ export function FolderOptions() {
     </div>
   );
 }
-
-export default FolderOptions;

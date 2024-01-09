@@ -1,7 +1,7 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import logo from '/public/assets/icons/header/logo.png';
 import styles from '@/styles/header/header.module.css';
-import Link from 'next/link';
 
 export default function Logo() {
   return (
