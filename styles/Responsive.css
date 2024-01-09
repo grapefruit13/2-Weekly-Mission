@@ -1,0 +1,72 @@
+@media (min-width: 770px) and (max-width: 1199px) {
+  .add-link-wrapper {
+    width: 44rem;
+  }
+
+  .card-wrapper {
+    grid-template-columns: repeat(2, 21.25rem);
+  }
+
+  .main-wrapper {
+    width: 44rem;
+  }
+}
+
+@media (min-width: 390px) and (max-width: 769px) {
+  .header-profile_profile-name {
+    display: none;
+  }
+
+  .add-link-wrapper {
+    width: 325px;
+  }
+
+  .add-link {
+    margin: 1.5rem 0 2.5rem 0;
+    height: 53px;
+    background-size: 1rem;
+    background-position: 0.62rem;
+    padding-left: 2.12rem;
+  }
+
+  .add-link::placeholder {
+    font-size: 0.875rem;
+    line-height: normal;
+  }
+  .add-link_add-btn {
+    top: 2rem;
+    right: 10px;
+  }
+  .main-wrapper {
+    padding-top: 1.25rem;
+    width: 21.25rem;
+    padding-bottom: 60px;
+  }
+
+  .folder-wrapper {
+    flex-wrap: wrap;
+  }
+
+  .folder-add-button {
+    display: none;
+  }
+
+  .current-folder-option-wrapper {
+    padding-top: 1.75rem;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .option-wrapper {
+    justify-content: flex-start;
+    margin: -1px -6px;
+  }
+  .card-wrapper {
+    grid-template-columns: repeat(1, 21.25rem);
+  }
+
+  .codeit {
+    top: 110px;
+  }
+}
