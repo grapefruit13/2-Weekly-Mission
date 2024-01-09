@@ -1,0 +1,23 @@
+.input {
+  margin: auto;
+  width: 280px;
+  padding: 18px 15px;
+  border-radius: 8px;
+  background: var(--Linkbrary-white, #fff);
+  border: 1px solid var(--Linkbrary-gray20, #ccd5e3);
+  color: var(--Linkbrary-gray100, #373740);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+}
+
+.input::placeholder {
+  color: var(--Linkbrary-gray60, #9fa6b2);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+}
+
+.input:focus {
+  border: 1px solid var(--Linkbrary-primary-color, #6d6afe);
+}

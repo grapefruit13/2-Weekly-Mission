@@ -1,0 +1,35 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.itemContainer {
+  width: 264px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px;
+}
+
+.itemContainer:hover {
+  border-radius: 8px;
+  background: var(--Linkbrary-bg, #f0f6ff);
+  background-image: url('/assets/icons/modal/check.svg');
+  background-size: 14px;
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+}
+
+.title {
+  color: var(--Linkbrary-gray100, #373740);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+}
+
+.count {
+  color: var(--Linkbrary-gray60, #9fa6b2);
+  font-size: 14px;
+  font-weight: 400;
+}
