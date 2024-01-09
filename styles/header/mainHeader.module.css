@@ -36,3 +36,10 @@
   font-size: 4rem;
   font-weight: 600;
 }
+
+.mainWrapper {
+  width: 106rem;
+  padding-top: 4rem;
+  padding-bottom: 10rem;
+  margin: auto;
+}

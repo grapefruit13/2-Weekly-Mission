@@ -16,7 +16,6 @@
 
 .info {
   display: flex;
-  /* width: 11.31944rem; */
   width: 18.1rem;
   align-items: flex-start;
   gap: 1.875rem;
@@ -31,7 +30,6 @@
 
 .sns {
   display: flex;
-  align-items: flex-start;
   gap: 1.2rem;
 }
 
