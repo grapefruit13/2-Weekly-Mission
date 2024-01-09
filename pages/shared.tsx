@@ -50,7 +50,7 @@ export default function Shared() {
         image_source: profileImageSource,
       }));
     } catch (e) {
-      console.log(e);
+      throw Error(`getSampleUserData에서 ${e}`);
     }
   };
 
@@ -64,10 +64,8 @@ export default function Shared() {
       setFolderDatas(foldersData);
       setLinks(linksData);
       setOwnerDatas(ownerData);
-      console.log('ownerData: ', ownerData);
-      console.log('foldersData: ', foldersData);
     } catch (e) {
-      console.log(`getLinks에서 ${e} 오류`);
+      throw Error(`getLinks에서 ${e} 오류`);
     }
   };
 

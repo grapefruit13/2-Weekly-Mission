@@ -52,7 +52,7 @@ export default function Home() {
         image_source: profileImageSource,
       }));
     } catch (e) {
-      console.log(e);
+      throw Error(`getSampleUserData ${e} 오류`);
     }
   };
 
@@ -66,10 +66,8 @@ export default function Home() {
       setFolderDatas(foldersData);
       setLinks(linksData);
       setOwnerDatas(ownerData);
-      console.log('ownerData: ', ownerData);
-      console.log('foldersData: ', foldersData);
     } catch (e) {
-      console.log(`getLinks에서 ${e} 오류`);
+      throw Error(`getLinks에서 ${e} 오류`);
     }
   };
 
