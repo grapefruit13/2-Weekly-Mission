@@ -28,9 +28,9 @@ export default function MainHeader({
           <Image
             className={styles.profileImg}
             src={ownerDatas.profileImageSource}
-            alt="profileImg"
             width={60}
             height={60}
+            alt="profileImg"
           />
           <div className={styles.profileName}>@{ownerDatas.name}</div>
         </div>
