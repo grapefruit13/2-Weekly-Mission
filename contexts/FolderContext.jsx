@@ -12,6 +12,8 @@ export function FolderContextProvider({ children }) {
     addNewFolder: false,
   });
   const [addedLink, setAddedLink] = useState('');
+  const [keyword, setKeyword] = useState('');
+  const [filteredLinks, setFilteredLinks] = useState([]);
 
   return (
     <FolderContext.Provider
@@ -22,6 +24,10 @@ export function FolderContextProvider({ children }) {
         addedLink,
         folderLists,
         setFolderLists,
+        keyword,
+        setKeyword,
+        filteredLinks,
+        setFilteredLinks,
       }}
     >
       {children}
