@@ -1,10 +1,12 @@
-import Header from '@/components/common/Header';
+import { useContext, useEffect, useState } from 'react';
 import Head from 'next/head';
-import { useEffect, useState } from 'react';
-import { getData } from '../utils/api';
+import Header from '@/components/common/Header';
+import { getData } from '@/utils/api';
 import MainHeader from '@/components/common/sharedPage/MainHeader';
 import SearchBar from '@/components/common/SearchBar';
 import CardWrapper from '@/components/common/CardWrapper';
+import FolderContext from '@/contexts/FolderContext';
+import { filterByKeyword } from '@/utils/searchUtils';
 import styles from '@/styles/card/cardWrapper.module.css';
 
 export default function Home() {
@@ -21,6 +23,8 @@ export default function Home() {
     links?: {}[];
   }
 
+  const { keyword, filteredLinks, setFilteredLinks } =
+    useContext(FolderContext);
   const [profileDatas, setProfileDatas] = useState({
     id: 0,
     name: '',
@@ -32,7 +36,6 @@ export default function Home() {
     name: '',
     owner: { default: 'default' },
   });
-
   const [ownerDatas, setOwnerDatas] = useState<OwnerDataProps>({
     id: '',
     name: '',
@@ -62,7 +65,6 @@ export default function Home() {
       const linksData = result.folder.links;
       const foldersData = result.folder;
       const ownerData = result.folder.owner;
-
       setFolderDatas(foldersData);
       setLinks(linksData);
       setOwnerDatas(ownerData);
@@ -75,6 +77,10 @@ export default function Home() {
     getSampleUserData();
     getLinks();
   }, []);
+
+  useEffect(() => {
+    setFilteredLinks(filterByKeyword(links, keyword));
+  }, [keyword]);
 
   return (
     <>
@@ -102,7 +108,14 @@ export default function Home() {
         <MainHeader ownerDatas={ownerDatas} folderDatas={folderDatas} />
         <div className={styles.mainWrapper}>
           <SearchBar />
-          <CardWrapper links={links} />
+          {/* <CardWrapper links={keyword? filteredLinks : links} /
+          > */}
+
+          {
+            <CardWrapper
+              links={keyword && filteredLinks ? filteredLinks : links}
+            />
+          }
         </div>
       </main>
     </>

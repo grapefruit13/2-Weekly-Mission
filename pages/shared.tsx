@@ -1,9 +1,11 @@
-import { useEffect, useState } from 'react';
-import { getData } from '../utils/api';
-import Header from '../components/common/Header';
-import MainHeader from '../components/common/sharedPage/MainHeader';
-import SearchBar from '../components/common/SearchBar';
-import CardWrapper from '../components/common/CardWrapper';
+import { useContext, useEffect, useState } from 'react';
+import FolderContext from '@/contexts/FolderContext';
+import Header from '@/components/common/Header';
+import MainHeader from '@/components/common/sharedPage/MainHeader';
+import SearchBar from '@/components/common/SearchBar';
+import CardWrapper from '@/components/common/CardWrapper';
+import { getData } from '@/utils/api';
+import { filterByKeyword } from '@/utils/searchUtils';
 import styles from '@/styles/header/mainHeader.module.css';
 
 interface OwnerDataProps {
@@ -20,6 +22,8 @@ interface FolderProps {
 }
 
 export default function Shared() {
+  const { keyword, filteredLinks, setFilteredLinks } =
+    useContext(FolderContext);
   const [profileDatas, setProfileDatas] = useState({
     id: 0,
     name: '',
@@ -60,7 +64,6 @@ export default function Shared() {
       const linksData = result.folder.links;
       const foldersData = result.folder;
       const ownerData = result.folder.owner;
-
       setFolderDatas(foldersData);
       setLinks(linksData);
       setOwnerDatas(ownerData);
@@ -74,13 +77,17 @@ export default function Shared() {
     getLinks();
   }, []);
 
+  useEffect(() => {
+    setFilteredLinks(filterByKeyword(links, keyword));
+  }, [keyword]);
+
   return (
     <>
       <Header profileDatas={profileDatas} />
       <MainHeader ownerDatas={ownerDatas} folderDatas={folderDatas} />
       <div className={styles.mainWrapper}>
         <SearchBar />
-        <CardWrapper links={links} />
+        <CardWrapper links={keyword && filteredLinks ? filteredLinks : links} />
       </div>
     </>
   );

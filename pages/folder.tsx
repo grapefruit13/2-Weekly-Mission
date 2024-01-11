@@ -11,14 +11,18 @@ import FolderOptions from '@/components/common/folderPage/FolderOptions';
 import Nolinks from '@/components/common/folderPage/NoLinks';
 import CardWrapper from '@/components/common/CardWrapper';
 import styles from '@/styles/card/cardWrapper.module.css';
+import { filterByKeyword } from '@/utils/searchUtils';
+import FolderAddButton from '@/components/common/folderPage/FolderAddButton';
 
 export default function Folder() {
   const {
     addedLink,
     clickedOption,
-    setClickedOption,
     folderLists,
     setFolderLists,
+    keyword,
+    filteredLinks,
+    setFilteredLinks,
   } = useContext(FolderContext);
   const [profileDatas, setProfileDatas] = useState({
     id: 0,
@@ -37,7 +41,6 @@ export default function Folder() {
       const result = await getData('users/1');
       const { id, created_at, name, image_source, email, auth_id } =
         result.data[0];
-
       setProfileDatas((prevProfileDatas) => ({
         ...prevProfileDatas,
         id: id,
@@ -115,6 +118,10 @@ export default function Folder() {
     getFolder();
   }, [currentFolderId]);
 
+  useEffect(() => {
+    setFilteredLinks(filterByKeyword(links, keyword));
+  }, [keyword]);
+
   return (
     <>
       {clickedOption.addFolderLink && addedLink && (
@@ -155,7 +162,7 @@ export default function Folder() {
       <AddLink />
       <div className={styles.mainWrapper}>
         <SearchBar />
-        {folderLists.length ? (
+        {folderLists.length && (
           <>
             <div className={styles.folderAddContainer}>
               <div className={styles.folderWrapper}>
@@ -175,20 +182,10 @@ export default function Folder() {
                     );
                   })
                 ) : (
-                  <div>folderLists가 없습니다.</div>
+                  <Nolinks msg="folderLists가 없습니다." />
                 )}
               </div>
-              <button className={styles.addBtn}>
-                <Image
-                  src="/assets/icons/card/add.svg"
-                  width={16}
-                  height={16}
-                  alt="plus-button"
-                  onClick={() => {
-                    setClickedOption({ addNewFolder: true });
-                  }}
-                />
-              </button>
+              <FolderAddButton />
             </div>
             <div className={styles.folderOptionWrapper}>
               <div className={styles.currentFolderName}>
@@ -199,12 +196,13 @@ export default function Folder() {
             {!links.length ? (
               <Nolinks msg={'이 폴더에 아직 저장된 링크가 없습니다'} />
             ) : (
-              <CardWrapper links={links} />
+              <CardWrapper
+                links={keyword && filteredLinks ? filteredLinks : links}
+              />
             )}
           </>
-        ) : (
-          <Nolinks msg={'저장된 링크가 없습니다.'} />
         )}
+        {!folderLists.length && <Nolinks msg="저장된 링크가 없습니다" />}
       </div>
     </>
   );
