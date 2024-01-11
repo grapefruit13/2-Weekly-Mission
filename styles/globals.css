@@ -19,4 +19,5 @@ button {
 
 input {
   border-style: none;
+  outline: none;
 }
