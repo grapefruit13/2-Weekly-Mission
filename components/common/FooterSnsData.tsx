@@ -3,7 +3,7 @@ import twitter from '/public/assets/icons/footer/twitter.png';
 import instagram from '/public/assets/icons/footer/instagram.png';
 import youtube from '/public/assets/icons/footer/youtube.png';
 
-export const FooterSnsDatas = [
+export const FooterSnsData = [
   { id: 1, name: 'facebook', url: 'https://www.facebook.com', img: facebook },
   { id: 2, name: 'twitter', url: 'https://www.twitter.com', img: twitter },
   {
@@ -20,4 +20,4 @@ export const FooterSnsDatas = [
   },
 ];
 
-export default FooterSnsDatas;
+export default FooterSnsData;
