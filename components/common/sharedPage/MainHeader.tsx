@@ -1,40 +1,39 @@
-import styles from '@/styles/header/mainHeader.module.css';
 import Image from 'next/image';
-
-interface OwnerDataProps {
-  id: string;
-  name: string;
-  profileImageSource: string;
+import styles from '@/styles/header/mainHeader.module.css';
+interface Folder {
+  folderData: {
+    id: string;
+    name: string;
+    owner: {
+      id: number;
+      name: string;
+      profileImageSource: string;
+    };
+    links?: {
+      id: number;
+      createdAt: string;
+      url: string;
+      title: string;
+      description: string;
+    }[];
+  };
 }
 
-interface FolderProps {
-  id: string;
-  name: string;
-  owner: object;
-  links?: {}[];
-}
-
-export default function MainHeader({
-  ownerDatas,
-  folderDatas,
-}: {
-  ownerDatas: OwnerDataProps;
-  folderDatas: FolderProps;
-}) {
+export default function MainHeader({ folderData }: Folder) {
   return (
     <>
       <div className={styles.container}>
         <div className={styles.profile}>
           <Image
             className={styles.profileImg}
-            src={ownerDatas.profileImageSource}
+            src={folderData.owner.profileImageSource}
             width={60}
             height={60}
             alt="profileImg"
           />
-          <div className={styles.profileName}>@{ownerDatas.name}</div>
+          <div className={styles.profileName}>@{folderData.owner.name}</div>
         </div>
-        <span className={styles.folderName}>{folderDatas.name}</span>
+        <span className={styles.folderName}>{folderData.name}</span>
       </div>
     </>
   );

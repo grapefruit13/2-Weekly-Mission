@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
-import Image from 'next/image';
 import { getData } from '@/utils/api';
+import { filterByKeyword } from '@/utils/searchUtils';
 import FolderContext from '@/contexts/FolderContext';
 import Modal from '@/components/common/folderPage/modal/Modal';
 import Header from '@/components/common/Header';
@@ -10,21 +10,20 @@ import Folders from '@/components/common/folderPage/Folders';
 import FolderOptions from '@/components/common/folderPage/FolderOptions';
 import Nolinks from '@/components/common/folderPage/NoLinks';
 import CardWrapper from '@/components/common/CardWrapper';
-import styles from '@/styles/card/cardWrapper.module.css';
-import { filterByKeyword } from '@/utils/searchUtils';
 import FolderAddButton from '@/components/common/folderPage/FolderAddButton';
+import styles from '@/styles/card/cardWrapper.module.css';
 
 export default function Folder() {
   const {
     addedLink,
     clickedOption,
-    folderLists,
-    setFolderLists,
+    folderList,
+    setFolderList,
     keyword,
     filteredLinks,
     setFilteredLinks,
   } = useContext(FolderContext);
-  const [profileDatas, setProfileDatas] = useState({
+  const [profileData, setProfileData] = useState({
     id: 0,
     created_at: '',
     name: '',
@@ -33,25 +32,27 @@ export default function Folder() {
     auth_id: '',
   });
   const [links, setLinks] = useState([]);
-  const [currentFolderId, setCurrentFolderId] = useState('');
-  const [currentFolderName, setCurrentFolderName] = useState<string>('전체');
+  const [currentFolder, setCurrentFolder] = useState<{
+    id: string;
+    name?: string;
+  }>({ id: '', name: '전체' });
 
   const getUserData = async () => {
     try {
       const result = await getData('users/1');
       const { id, created_at, name, image_source, email, auth_id } =
         result.data[0];
-      setProfileDatas((prevProfileDatas) => ({
-        ...prevProfileDatas,
-        id: id,
-        created_at: created_at,
-        name: name,
-        image_source: image_source,
-        email: email,
-        auth_id: auth_id,
+      setProfileData((prevProfileData) => ({
+        ...prevProfileData,
+        id,
+        created_at,
+        name,
+        image_source,
+        email,
+        auth_id,
       }));
     } catch (e) {
-      throw Error(`Folderpage getUserData ${e}`);
+      throw new Error(`Folderpage getUserData ${e}`);
     }
   };
 
@@ -59,31 +60,33 @@ export default function Folder() {
     try {
       const result = await getData('users/1/links');
       const { data } = result;
-      const datas = data.map((link: any) => ({
+      const links = data.map((link: any) => ({
         ...link,
         createdAt: link.created_at,
         imageSource: link.image_source,
       }));
-      setLinks(datas);
+      setLinks(links);
     } catch (e) {
-      throw Error(`Folderpage의 getLinksData에서 ${e} 발생`);
+      throw new Error(`Folderpage의 getLinksData에서 ${e} 발생`);
     }
   };
 
-  const getFolderLists = async () => {
+  const getFolderList = async () => {
     try {
       const result = await getData('users/1/folders');
       const { data } = result;
       data.unshift({ name: '전체' });
-      setFolderLists(data);
+      setFolderList(data);
     } catch (e) {
-      throw Error(`Folderpage의 getFolderLists에서 ${e} 발생`);
+      throw Error(`Folderpage의 getFolderList에서 ${e} 발생`);
     }
   };
 
   const getFolder = async () => {
     try {
-      const result = await getData(`users/1/links?folderId=${currentFolderId}`);
+      const result = await getData(
+        `users/1/links?folderId=${currentFolder?.id}`,
+      );
       const { data } = result;
       const datas = data.map((link: any) => ({
         ...link,
@@ -96,27 +99,30 @@ export default function Folder() {
     }
   };
 
-  const handleFolderClick = (e: any) => {
-    setCurrentFolderName(e.target.textContent);
-    if (e.target.textContent === '전체') {
+  const handleFolderClick = (
+    e: React.MouseEvent<HTMLDivElement, MouseEvent>,
+  ) => {
+    const textContent = e.currentTarget.textContent;
+    setCurrentFolder((prev) => ({ ...prev, name: textContent?.toString() }));
+    if (textContent === '전체') {
       getTotalLinksData();
       return;
     }
-    const clikedFolder: any = folderLists.filter(
-      (folder: any) => folder.name === e.target.textContent,
+    const clikedFolder: any = folderList.filter(
+      (folder: any) => folder.name === textContent,
     );
-    setCurrentFolderId(clikedFolder[0].id);
+    setCurrentFolder(clikedFolder[0]);
   };
 
   useEffect(() => {
     getUserData();
     getTotalLinksData();
-    getFolderLists();
+    getFolderList();
   }, []);
 
   useEffect(() => {
     getFolder();
-  }, [currentFolderId]);
+  }, [currentFolder]);
 
   useEffect(() => {
     setFilteredLinks(filterByKeyword(links, keyword));
@@ -129,16 +135,16 @@ export default function Folder() {
           title="폴더에 추가"
           button={{ color: 'blue', text: '추가하기' }}
           subtitle={addedLink}
-          folderLists={folderLists}
+          folderList={folderList}
         />
       )}
       {clickedOption.shareFolder && (
-        <Modal title="폴더 공유" subtitle={currentFolderName} share />
+        <Modal title="폴더 공유" subtitle={currentFolder?.name} share />
       )}
       {clickedOption.editFolderName && (
         <Modal
           title="폴더 이름 변경"
-          folderName={currentFolderName}
+          folderName={currentFolder?.name}
           input
           button={{ color: 'blue', text: '변경하기' }}
         />
@@ -146,7 +152,7 @@ export default function Folder() {
       {clickedOption.deleteFolder && (
         <Modal
           title="폴더 삭제"
-          subtitle={currentFolderName}
+          subtitle={currentFolder?.name}
           button={{ color: 'red', text: '삭제하기' }}
         />
       )}
@@ -158,21 +164,24 @@ export default function Folder() {
         />
       )}
 
-      <Header profileDatas={profileDatas} />
+      <Header profileData={profileData} />
       <AddLink />
       <div className={styles.mainWrapper}>
         <SearchBar />
-        {folderLists.length && (
+        {folderList.length && (
           <>
             <div className={styles.folderAddContainer}>
               <div className={styles.folderWrapper}>
-                {folderLists ? (
-                  folderLists.map((folder: any, i: number) => {
+                {folderList ? (
+                  folderList.map((folder: any) => {
                     return (
-                      <div key={`folder-${i}`} onClick={handleFolderClick}>
+                      <div
+                        key={`folder-${folder.id}`}
+                        onClick={(e) => handleFolderClick(e)}
+                      >
                         <Folders
                           className={`${styles.listedFolderName} ${
-                            currentFolderName === folder.name
+                            currentFolder?.name === folder.name
                               ? styles.clickedFolder
                               : ''
                           }`}
@@ -182,16 +191,16 @@ export default function Folder() {
                     );
                   })
                 ) : (
-                  <Nolinks msg="folderLists가 없습니다." />
+                  <Nolinks msg="folderList가 없습니다." />
                 )}
               </div>
               <FolderAddButton />
             </div>
             <div className={styles.folderOptionWrapper}>
               <div className={styles.currentFolderName}>
-                {currentFolderName}
+                {currentFolder?.name}
               </div>
-              {currentFolderName === '전체' ? '' : <FolderOptions />}
+              {currentFolder?.name === '전체' ? '' : <FolderOptions />}
             </div>
             {!links.length ? (
               <Nolinks msg={'이 폴더에 아직 저장된 링크가 없습니다'} />
@@ -202,7 +211,7 @@ export default function Folder() {
             )}
           </>
         )}
-        {!folderLists.length && <Nolinks msg="저장된 링크가 없습니다" />}
+        {!folderList.length && <Nolinks msg="저장된 링크가 없습니다" />}
       </div>
     </>
   );
