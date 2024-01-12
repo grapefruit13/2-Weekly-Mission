@@ -40,19 +40,17 @@ export default function Shared() {
         image_source: profileImageSource,
       }));
     } catch (e) {
-      throw Error(`getSampleUserData에서 ${e}`);
+      throw new Error(`getSampleUserData에서 ${e}`);
     }
   };
 
   const getLinks = async () => {
     try {
       const result = await getData('sample/folder');
-      const linksData = result.folder.links;
       const foldersData = result.folder;
-      const ownerData = result.folder.owner;
       setFolder(foldersData);
     } catch (e) {
-      throw Error(`getLinks에서 ${e} 오류`);
+      throw new Error(`getLinks에서 ${e} 오류`);
     }
   };
 
