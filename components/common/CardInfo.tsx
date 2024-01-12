@@ -1,9 +1,8 @@
+import { useState } from 'react';
 import Image from 'next/image';
-import { useContext, useReducer } from 'react';
-import Dropdown from './folderPage/Dropdown';
-import KebabContext from '../../contexts/KebabContext';
-import styles from '@/styles/card/card.module.css';
 import { useRouter } from 'next/router';
+import Dropdown from './folderPage/Dropdown';
+import styles from '@/styles/card/card.module.css';
 
 interface Props {
   mins: string;
@@ -15,6 +14,14 @@ interface Props {
     month: string;
     day: string;
   };
+  linkInfo: {
+    id: string;
+    createdAt: string;
+    url: string;
+    title: string;
+    description: string;
+    imageSource: string;
+  };
 }
 
 export default function CardInfo({
@@ -23,8 +30,9 @@ export default function CardInfo({
   title,
   description,
   createdDates,
+  linkInfo,
 }: Props) {
-  const { setIsKebabClicked, isKebabClicked } = useContext(KebabContext);
+  const [isKebabClicked, setIsKebabClicked] = useState(false);
   const router = useRouter();
 
   const handleKebabClick = () => {
@@ -45,7 +53,7 @@ export default function CardInfo({
           onClick={handleKebabClick}
           style={router.pathname !== '/' ? { cursor: 'pointer' } : undefined}
         />
-        {isKebabClicked && <Dropdown />}
+        {isKebabClicked && <Dropdown linkInfo={linkInfo} />}
       </div>
       <div>
         <div className={styles.title}>{title}</div>
