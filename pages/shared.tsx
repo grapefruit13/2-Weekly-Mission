@@ -1,53 +1,39 @@
 import { useContext, useEffect, useState } from 'react';
+import { getData } from '@/utils/api';
+import { filterByKeyword } from '@/utils/searchUtils';
 import FolderContext from '@/contexts/FolderContext';
 import Header from '@/components/common/Header';
 import MainHeader from '@/components/common/sharedPage/MainHeader';
 import SearchBar from '@/components/common/SearchBar';
 import CardWrapper from '@/components/common/CardWrapper';
-import { getData } from '@/utils/api';
-import { filterByKeyword } from '@/utils/searchUtils';
 import styles from '@/styles/header/mainHeader.module.css';
-
-interface OwnerDataProps {
-  id: string;
-  name: string;
-  profileImageSource: string;
-}
-
-interface FolderProps {
-  id: string;
-  name: string;
-  owner: object;
-  links?: {}[];
-}
 
 export default function Shared() {
   const { keyword, filteredLinks, setFilteredLinks } =
     useContext(FolderContext);
-  const [profileDatas, setProfileDatas] = useState({
+  const [profileData, setProfileData] = useState({
     id: 0,
     name: '',
     email: '',
     image_source: '',
   });
-  const [folderDatas, setFolderDatas] = useState<FolderProps>({
+  const [folder, setFolder] = useState<{
+    id: string;
+    name: string;
+    owner: object;
+    links?: {}[];
+  }>({
     id: '',
     name: '',
     owner: { default: 'default' },
   });
-  const [ownerDatas, setOwnerDatas] = useState<OwnerDataProps>({
-    id: '',
-    name: '',
-    profileImageSource: '',
-  });
-  const [links, setLinks] = useState([]);
 
   const getSampleUserData = async () => {
     try {
       const response = await getData('sample/user');
       const { id, name, email, profileImageSource } = response;
-      setProfileDatas((prevProfileDatas) => ({
-        ...prevProfileDatas,
+      setProfileData((prevProfileData) => ({
+        ...prevProfileData,
         id: id,
         name: name,
         email: email,
@@ -64,30 +50,30 @@ export default function Shared() {
       const linksData = result.folder.links;
       const foldersData = result.folder;
       const ownerData = result.folder.owner;
-      setFolderDatas(foldersData);
-      setLinks(linksData);
-      setOwnerDatas(ownerData);
+      setFolder(foldersData);
     } catch (e) {
       throw Error(`getLinks에서 ${e} 오류`);
     }
   };
 
   useEffect(() => {
+    setFilteredLinks(filterByKeyword(folder.links, keyword));
+  }, [keyword]);
+
+  useEffect(() => {
     getSampleUserData();
     getLinks();
   }, []);
 
-  useEffect(() => {
-    setFilteredLinks(filterByKeyword(links, keyword));
-  }, [keyword]);
-
   return (
     <>
-      <Header profileDatas={profileDatas} />
-      <MainHeader ownerDatas={ownerDatas} folderDatas={folderDatas} />
+      <Header profileData={profileData} />
+      <MainHeader folderData={folder} />
       <div className={styles.mainWrapper}>
         <SearchBar />
-        <CardWrapper links={keyword && filteredLinks ? filteredLinks : links} />
+        <CardWrapper
+          links={keyword && filteredLinks ? filteredLinks : folder.links}
+        />
       </div>
     </>
   );
