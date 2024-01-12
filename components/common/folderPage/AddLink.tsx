@@ -1,5 +1,5 @@
 import { useContext, useState } from 'react';
-import FolderContext from '../../../contexts/FolderContext';
+import FolderContext from '@/contexts/FolderContext';
 import styles from '@/styles/folderPage/addLink.module.css';
 
 export default function AddLink() {
@@ -9,7 +9,6 @@ export default function AddLink() {
   const handleBtnClick = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
   ) => {
-    e.preventDefault();
     setClickedOption({ addFolderLink: true });
     setAddedLink(linkValue);
   };
@@ -26,7 +25,7 @@ export default function AddLink() {
           onChange={(e) => setLinkValue(e.target.value)}
         />
         <button
-          type="submit"
+          type="button"
           className={styles.addBtn}
           onClick={(e) => handleBtnClick(e)}
         >
