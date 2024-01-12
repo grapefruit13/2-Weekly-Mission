@@ -3,7 +3,7 @@ import { createContext, useState } from 'react';
 const FolderContext = createContext();
 
 export function FolderContextProvider({ children }) {
-  const [folderLists, setFolderLists] = useState([{ name: '전체' }]);
+  const [folderList, setFolderList] = useState([]);
   const [clickedOption, setClickedOption] = useState({
     addFolderLink: false,
     shareFolder: false,
@@ -22,8 +22,8 @@ export function FolderContextProvider({ children }) {
         setClickedOption,
         setAddedLink,
         addedLink,
-        folderLists,
-        setFolderLists,
+        folderList,
+        setFolderList,
         keyword,
         setKeyword,
         filteredLinks,
