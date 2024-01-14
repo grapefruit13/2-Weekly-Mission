@@ -20,12 +20,27 @@ export default function Shared() {
   const [folder, setFolder] = useState<{
     id: string;
     name: string;
-    owner: object;
-    links?: {}[];
+    owner: {
+      id: number;
+      name: string;
+      profileImageSource: string;
+    };
+    links?: {
+      id: number;
+      createdAt: string;
+      url: string;
+      title: string;
+      description: string;
+    }[];
   }>({
     id: '',
     name: '',
-    owner: { default: 'default' },
+    owner: {
+      id: 0,
+      name: '',
+      profileImageSource: '',
+    },
+    links: [],
   });
 
   const getSampleUserData = async () => {
@@ -55,7 +70,7 @@ export default function Shared() {
   };
 
   useEffect(() => {
-    setFilteredLinks(filterByKeyword(folder.links, keyword));
+    setFilteredLinks(filterByKeyword(folder?.links, keyword));
   }, [keyword]);
 
   useEffect(() => {
@@ -70,7 +85,7 @@ export default function Shared() {
       <div className={styles.mainWrapper}>
         <SearchBar />
         <CardWrapper
-          links={keyword && filteredLinks ? filteredLinks : folder.links}
+          links={keyword && filteredLinks ? filteredLinks : folder?.links}
         />
       </div>
     </>
