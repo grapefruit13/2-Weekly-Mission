@@ -1,0 +1,22 @@
+.socialLoginContainer {
+  display: flex;
+  width: 400px;
+  padding: 12px 24px;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 8px;
+  border: 1px solid var(--Linkbrary-gray20, #ccd5e3);
+  background: var(--Linkbrary-gray10, #e7effb);
+}
+
+.title {
+  color: var(--Linkbrary-gray100, #373740);
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.iconWrapper {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
