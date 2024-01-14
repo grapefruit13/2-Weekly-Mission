@@ -1,10 +1,10 @@
 import { useContext } from 'react';
 import Image from 'next/image';
+import FolderContext from '@/contexts/FolderContext';
 import ModalInput from '@/components/common/folderPage/modal/ModalInput';
 import ModalButton from '@/components/common/folderPage/modal/ModalButton';
 import IconsBox from '@/components/common/folderPage/modal/IconsBox';
 import FolderList from '@/components/common/folderPage/modal/FolderList';
-import FolderContext from '@/contexts/FolderContext';
 import Close from '/public/assets/icons/modal/close.svg';
 import styles from '@/styles/folderPage/modal/modal.module.css';
 

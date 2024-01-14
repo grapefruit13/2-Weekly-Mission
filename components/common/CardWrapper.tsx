@@ -1,6 +1,6 @@
 import Card from '@/components/common/Card';
-import styles from '@/styles/card/cardWrapper.module.css';
 import Nolinks from '@/components/common/folderPage/NoLinks';
+import styles from '@/styles/card/cardWrapper.module.css';
 
 export default function CardWrapper({
   links,

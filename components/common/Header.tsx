@@ -1,6 +1,6 @@
 import Image from 'next/image';
-import LoginButton from './LoginButton';
-import Logo from './Logo';
+import LoginButton from '@/components/common/LoginButton';
+import Logo from '@/components/common/Logo';
 import styles from '@/styles/header/header.module.css';
 
 interface Props {

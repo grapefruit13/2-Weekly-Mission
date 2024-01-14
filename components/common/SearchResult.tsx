@@ -1,5 +1,5 @@
-import styles from '@/styles/search/searchResult.module.css';
 import { useRouter } from 'next/router';
+import styles from '@/styles/search/searchResult.module.css';
 
 export default function SearchResult() {
   const router = useRouter();

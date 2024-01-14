@@ -13,10 +13,7 @@ export default function SearchBar() {
   const inputRef = useRef<HTMLInputElement | null>(null);
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (
-      e.key === 'Enter' ||
-      (e.key === 'Backspace' && router.query.keyword === '')
-    ) {
+    if (e.key === 'Backspace' && router.query.keyword === '') {
       setKeyword(router.query);
     }
     if (e.key === 'Enter') {

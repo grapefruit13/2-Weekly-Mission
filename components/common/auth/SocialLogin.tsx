@@ -1,6 +1,6 @@
 import Image from 'next/image';
-import styles from '@/styles/auth/socialLogin.module.css';
 import Link from 'next/link';
+import styles from '@/styles/auth/socialLogin.module.css';
 
 export default function SocialLogin({ text }: any) {
   return (

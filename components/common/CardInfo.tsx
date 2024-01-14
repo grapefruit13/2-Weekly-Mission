@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import Dropdown from './folderPage/Dropdown';
+import Dropdown from '@/components/common/folderPage/Dropdown';
 import styles from '@/styles/card/card.module.css';
 
 interface Props {
