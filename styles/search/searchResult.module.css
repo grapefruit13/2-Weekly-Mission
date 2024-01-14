@@ -1,0 +1,19 @@
+.searchResultContainer {
+  padding: 40px 0;
+}
+
+.resultMessage {
+  font-family: Pretendard;
+  font-size: 32px;
+  font-weight: 600;
+  line-height: normal;
+  letter-spacing: -0.2px;
+}
+
+.keyword {
+  color: var(--Linkbrary-gray100, #373740);
+}
+
+.sub {
+  color: var(--Linkbrary-gray60, #9fa6b2);
+}
