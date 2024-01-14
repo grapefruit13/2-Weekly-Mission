@@ -7,21 +7,17 @@ export default function Input({
   name,
   placeholder,
   onClick,
-  onChangeInput,
   onBlurInput,
   errorMsg,
-  ...props
 }: {
   type: string;
   name?: string;
   placeholder: string;
   onClick?: any;
   onBlurInput: (value: string) => any;
-  onChangeInput?: (value: string) => void;
   errorMsg: string;
 }) {
   const [isEyeClicked, setIsEyeClicked] = useState(false);
-  // const [errorMsg, setErrorMsg] = useState('');
 
   const handleEyeClick = () => {
     setIsEyeClicked((prev) => !prev);
@@ -39,7 +35,6 @@ export default function Input({
           onBlur={(e) => handleOnBlur(e)}
           name={type}
           type={type === 'password' && isEyeClicked ? 'text' : type}
-          {...props}
           className={
             errorMsg
               ? `${styles.textfieldInput} ${styles.errorInput}`
