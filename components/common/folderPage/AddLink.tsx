@@ -26,7 +26,7 @@ export default function AddLink() {
         />
         <button
           type="button"
-          className={styles.addBtn}
+          className={styles.addLinkButton}
           onClick={(e) => handleBtnClick(e)}
         >
           추가하기

@@ -6,7 +6,7 @@ import styles from '@/styles/card/cardWrapper.module.css';
 export default function FolderAddButton() {
   const { setClickedOption } = useContext(FolderContext);
   return (
-    <button className={styles.addBtn}>
+    <button className={styles.folderAddButton}>
       <Image
         src="/assets/icons/card/add.svg"
         width={16}

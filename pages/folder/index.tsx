@@ -171,7 +171,7 @@ export default function Folder() {
       <div className={styles.mainWrapper}>
         <SearchBar />
         {folderList.length && (
-          <>
+          <div className={styles.folderCardContainer}>
             <div className={styles.folderAddContainer}>
               <div className={styles.folderWrapper}>
                 {folderList ? (
@@ -211,7 +211,7 @@ export default function Folder() {
                 links={keyword && filteredLinks ? filteredLinks : links}
               />
             )}
-          </>
+          </div>
         )}
         {!folderList.length && <Nolinks msg="저장된 링크가 없습니다" />}
       </div>

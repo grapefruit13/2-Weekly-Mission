@@ -1,4 +1,7 @@
 .mainWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
   width: 106rem;
   padding-top: 4rem;
   padding-bottom: 10rem;
@@ -10,6 +13,12 @@
   grid-template-columns: repeat(3, 34rem);
   grid-row-gap: 2.5rem;
   grid-column-gap: 2rem;
+}
+
+.folderCardContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
 }
 
 .folderAddContainer {
@@ -35,7 +44,7 @@
   font-weight: 400;
 }
 
-.addBtn {
+.folderAddButton {
   margin: 0;
   background: inherit;
   cursor: pointer;
@@ -51,7 +60,6 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1.5rem 0rem;
 }
 
 .currentFolderName {
