@@ -78,7 +78,7 @@ export default function Folder() {
       data.unshift({ name: '전체' });
       setFolderList(data);
     } catch (e) {
-      throw Error(`Folderpage의 getFolderList에서 ${e} 발생`);
+      throw new Error(`Folderpage의 getFolderList에서 ${e} 발생`);
     }
   };
 
@@ -95,7 +95,9 @@ export default function Folder() {
       }));
       setLinks(datas);
     } catch (e) {
-      throw Error(`Folderpage의 handleFolderClick의 getFolder에서 ${e} 발생`);
+      throw new Error(
+        `Folderpage의 handleFolderClick의 getFolder에서 ${e} 발생`,
+      );
     }
   };
 
