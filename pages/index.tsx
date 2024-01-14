@@ -21,12 +21,22 @@ export default function Home() {
   const [folder, setFolder] = useState<{
     id: string;
     name: string;
-    owner: object;
-    links?: {}[];
+    owner: {
+      id: number;
+      name: string;
+      profileImageSource: string;
+    };
+    links?: {
+      id: number;
+      createdAt: string;
+      url: string;
+      title: string;
+      description: string;
+    }[];
   }>({
     id: '',
     name: '',
-    owner: { default: 'default' },
+    owner: { id: 0, name: '', profileImageSource: '' },
   });
 
   const getSampleUserData = async () => {
