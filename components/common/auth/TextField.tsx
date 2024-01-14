@@ -6,14 +6,12 @@ export default function TextField({
   type,
   placeholder,
   onBlurInput,
-  onChangeInput,
   errorMsg,
 }: {
   label: string;
   type: string;
   placeholder: string;
   onBlurInput: (value: string) => any;
-  onChangeInput?: (value: string) => void;
   errorMsg: string;
 }) {
   return (
@@ -23,7 +21,6 @@ export default function TextField({
         type={type}
         placeholder={placeholder}
         onBlurInput={onBlurInput}
-        onChangeInput={onChangeInput}
         errorMsg={errorMsg}
       />
     </div>
