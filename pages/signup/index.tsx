@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { validateEmail, validatePassword } from '@/utils/validation';
 import { checkDuplicateEmail, postSignup } from '@/utils/api';
+import { getToken, setToken } from '@/utils/auth';
 import TextField from '@/components/common/auth/TextField';
 import AuthHeader from '@/components/common/auth/AuthHeader';
 import AuthButton from '@/components/common/auth/AuthButton';
@@ -9,6 +10,7 @@ import SocialLogin from '@/components/common/auth/SocialLogin';
 import styles from '@/styles/auth/auth.module.css';
 
 export default function Signup() {
+  const router = useRouter();
   const [authInfo, setAuthInfo] = useState({
     email: '',
     password: '',
@@ -19,7 +21,6 @@ export default function Signup() {
     password: '',
     passwordConfirmation: '',
   });
-  const router = useRouter();
 
   const getEmailErrorMessage = async (value: string) => {
     if (!authInfo.email) return;
@@ -133,8 +134,8 @@ export default function Signup() {
         password: authInfo.password,
       });
       if (res.accessToken) {
-        localStorage.setItem('accessToken', res.accessToken);
-        router.push('/folder');
+        setToken(res.accessToken);
+        router.replace('/folder');
       } else {
         return;
       }
@@ -146,6 +147,12 @@ export default function Signup() {
   useEffect(() => {
     getEmailErrorMessage(authInfo.email);
   }, [authInfo.email]);
+
+  useEffect(() => {
+    const accessToken = getToken();
+    if (!accessToken) return;
+    router.replace('/folder');
+  }, []);
 
   return (
     <div className={styles.body}>

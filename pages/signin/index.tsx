@@ -1,14 +1,16 @@
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
+import { postSignin } from '@/utils/api';
+import { getToken, setToken } from '@/utils/auth';
+import { validateEmail } from '@/utils/validation';
 import AuthButton from '@/components/common/auth/AuthButton';
 import AuthHeader from '@/components/common/auth/AuthHeader';
 import SocialLogin from '@/components/common/auth/SocialLogin';
 import TextField from '@/components/common/auth/TextField';
 import styles from '@/styles/auth/auth.module.css';
-import { postSignin } from '@/utils/api';
-import { validateEmail } from '@/utils/validation';
-import { useRouter } from 'next/router';
-import { useState } from 'react';
 
 export default function Signin() {
+  const router = useRouter();
   const [authInfo, setAuthInfo] = useState({
     email: '',
     password: '',
@@ -17,7 +19,6 @@ export default function Signin() {
     email: '',
     password: '',
   });
-  const router = useRouter();
 
   const emailOnBlurInput = (value: string): void => {
     if (!value) {
@@ -68,8 +69,8 @@ export default function Signin() {
       });
       console.log(res);
       if (res.accessToken) {
-        localStorage.setItem('accessToken', res.accessToken);
-        router.push('/folder');
+        setToken(res.accessToken);
+        router.replace('/folder');
       } else {
         return;
       }
@@ -77,6 +78,12 @@ export default function Signin() {
       throw new Error(`signup handleSubmit: ${e}`);
     }
   };
+
+  useEffect(() => {
+    const accessToken = getToken();
+    if (!accessToken) return;
+    router.replace('/folder');
+  }, []);
 
   return (
     <div className={styles.body}>
