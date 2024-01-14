@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import logo from '/public/assets/icons/header/logo.png';
+import logo from '/public/assets/icons/header/logo.svg';
 import styles from '@/styles/header/header.module.css';
 
 export default function Logo() {

@@ -1,7 +1,8 @@
 import { useContext, useState } from 'react';
+import { useRouter } from 'next/router';
+import Image from 'next/image';
 import FolderContext from '../../contexts/FolderContext';
 import styles from '@/styles/search/searchbar.module.css';
-import { useRouter } from 'next/router';
 
 export default function SearchBar() {
   const { setKeyword } = useContext(FolderContext);
@@ -51,6 +52,12 @@ export default function SearchBar() {
         placeholder="링크를 검색해 보세요."
         onChange={(e) => handleKeywordChange(e)}
         onKeyDown={(e) => handleKeyDown(e)}
+      />
+      <Image
+        src="/assets/icons/search/close.svg"
+        width={24}
+        height={24}
+        alt="reset-addLink"
       />
     </>
   );
