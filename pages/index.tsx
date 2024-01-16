@@ -1,73 +1,67 @@
-import Header from '@/components/common/Header';
+import { useContext, useEffect, useState } from 'react';
 import Head from 'next/head';
-import { useEffect, useState } from 'react';
-import { getData } from '../utils/api';
+import { filterByKeyword } from '@/utils/searchUtils';
+import { getData } from '@/utils/api';
+import FolderContext from '@/contexts/FolderContext';
+import Header from '@/components/common/Header';
 import MainHeader from '@/components/common/sharedPage/MainHeader';
 import SearchBar from '@/components/common/SearchBar';
 import CardWrapper from '@/components/common/CardWrapper';
 import styles from '@/styles/card/cardWrapper.module.css';
 
 export default function Home() {
-  interface OwnerDataProps {
-    id: string;
-    name: string;
-    profileImageSource: string;
-  }
-
-  interface FolderProps {
-    id: string;
-    name: string;
-    owner: object;
-    links?: {}[];
-  }
-
-  const [profileDatas, setProfileDatas] = useState({
+  const { keyword, filteredLinks, setFilteredLinks } =
+    useContext(FolderContext);
+  const [profileData, setProfileData] = useState({
     id: 0,
     name: '',
     email: '',
     image_source: '',
   });
-  const [folderDatas, setFolderDatas] = useState<FolderProps>({
+  const [folder, setFolder] = useState<{
+    id: string;
+    name: string;
+    owner: {
+      id: number;
+      name: string;
+      profileImageSource: string;
+    };
+    links?: {
+      id: number;
+      createdAt: string;
+      url: string;
+      title: string;
+      description: string;
+    }[];
+  }>({
     id: '',
     name: '',
-    owner: { default: 'default' },
+    owner: { id: 0, name: '', profileImageSource: '' },
   });
-
-  const [ownerDatas, setOwnerDatas] = useState<OwnerDataProps>({
-    id: '',
-    name: '',
-    profileImageSource: '',
-  });
-  const [links, setLinks] = useState([]);
 
   const getSampleUserData = async () => {
     try {
       const response = await getData('sample/user');
       const { id, name, email, profileImageSource } = response;
-      setProfileDatas((prevProfileDatas) => ({
-        ...prevProfileDatas,
+      setProfileData((prevProfileData) => ({
+        ...prevProfileData,
         id: id,
         name: name,
         email: email,
         image_source: profileImageSource,
       }));
     } catch (e) {
-      throw Error(`getSampleUserData ${e} 오류`);
+      throw new Error(`getSampleUserData ${e} 오류`);
     }
   };
 
   const getLinks = async () => {
     try {
       const result = await getData('sample/folder');
-      const linksData = result.folder.links;
       const foldersData = result.folder;
-      const ownerData = result.folder.owner;
-
-      setFolderDatas(foldersData);
-      setLinks(linksData);
-      setOwnerDatas(ownerData);
+      setFolder(foldersData);
     } catch (e) {
-      throw Error(`getLinks에서 ${e} 오류`);
+      throw new Error(`getLinks에서 ${e} 오류`);
     }
   };
 
@@ -75,6 +69,10 @@ export default function Home() {
     getSampleUserData();
     getLinks();
   }, []);
+
+  useEffect(() => {
+    setFilteredLinks(filterByKeyword(folder.links, keyword));
+  }, [keyword]);
 
   return (
     <>
@@ -91,18 +89,15 @@ export default function Home() {
           content="https://i.namu.wiki/i/8JbLEOm1EezAZzdujEwIA8rvaHFgPyqA3lUfr0HQXQ3T9tVClLGppcw82RTpyguF18pYI4ysHX9C0yzkb6G_7A.webp"
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link
-          rel="stylesheet"
-          type="text/css"
-          href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css"
-        />
       </Head>
       <main>
-        <Header profileDatas={profileDatas} />
-        <MainHeader ownerDatas={ownerDatas} folderDatas={folderDatas} />
+        <Header profileData={profileData} />
+        <MainHeader folderData={folder} />
         <div className={styles.mainWrapper}>
           <SearchBar />
-          <CardWrapper links={links} />
+          <CardWrapper
+            links={keyword && filteredLinks ? filteredLinks : folder.links}
+          />
         </div>
       </main>
     </>

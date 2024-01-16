@@ -6,7 +6,7 @@ import Footer from '@/components/common/Footer';
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <FolderContextProvider>
-      <Component {...pageProps} />;
+      <Component {...pageProps} />
       <Footer />
     </FolderContextProvider>
   );

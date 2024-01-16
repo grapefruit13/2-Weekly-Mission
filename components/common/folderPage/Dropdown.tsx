@@ -1,15 +1,24 @@
 import { useContext } from 'react';
-import Modal from './modal/Modal';
 import KebabContext from '@/contexts/KebabContext';
-import CardContext from '@/contexts/CardContext';
 import FolderContext from '@/contexts/FolderContext';
+import Modal from '@/components/common/folderPage/modal/Modal';
 import styles from '@/styles/card/dropdown.module.css';
 
-export default function Dropdown() {
+export default function Dropdown({
+  linkInfo,
+}: {
+  linkInfo: {
+    id: string;
+    createdAt: string;
+    url: string;
+    title: string;
+    description: string;
+    imageSource: string;
+  };
+}) {
   const { clickedKebabOption, setClickedKebabOption, closeKebab } =
     useContext(KebabContext);
-  const { folderLists } = useContext(FolderContext);
-  const { linkInfo } = useContext(CardContext);
+  const { folderList } = useContext(FolderContext);
 
   return (
     <>
@@ -28,7 +37,7 @@ export default function Dropdown() {
             button={{ color: 'blue', text: '추가하기' }}
             subtitle={linkInfo.url}
             closeKebab={closeKebab}
-            folderLists={folderLists}
+            folderList={folderList}
           />
         )}
         <div

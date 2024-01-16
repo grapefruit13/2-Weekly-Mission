@@ -1,8 +1,24 @@
+.mainWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  width: 106rem;
+  padding-top: 4rem;
+  padding-bottom: 10rem;
+  margin: auto;
+}
+
 .wrapper {
   display: grid;
   grid-template-columns: repeat(3, 34rem);
   grid-row-gap: 2.5rem;
   grid-column-gap: 2rem;
+}
+
+.folderCardContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
 }
 
 .folderAddContainer {
@@ -15,6 +31,7 @@
   display: flex;
   align-items: center;
   gap: 0.8rem;
+  flex-wrap: wrap;
 }
 
 .listedFolderName {
@@ -27,7 +44,7 @@
   font-weight: 400;
 }
 
-.addBtn {
+.folderAddButton {
   margin: 0;
   background: inherit;
   cursor: pointer;
@@ -43,7 +60,6 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1.5rem 0rem;
 }
 
 .currentFolderName {
@@ -73,11 +89,4 @@
   color: var(--linkbrary-gray-60, #9fa6b2);
   font-size: 1.4rem;
   font-weight: 600;
-}
-
-.mainWrapper {
-  width: 106rem;
-  padding-top: 4rem;
-  padding-bottom: 10rem;
-  margin: auto;
 }

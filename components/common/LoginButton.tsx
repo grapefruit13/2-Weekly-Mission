@@ -1,5 +1,5 @@
-import styles from '@/styles/header/header.module.css';
 import Link from 'next/link';
+import styles from '@/styles/header/header.module.css';
 
 export default function LoginButton() {
   return (

@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import Image from 'next/image';
-import FolderContext from '../../../contexts/FolderContext';
+import FolderContext from '@/contexts/FolderContext';
 import styles from '@/styles/card/cardWrapper.module.css';
 
 interface Props {

@@ -3,7 +3,6 @@ import { createContext, useState } from 'react';
 const KebabContext = createContext();
 
 export function KebabContextProvider({ children }) {
-  const [isKebabClicked, setIsKebabClicked] = useState(false);
   const [clickedKebabOption, setClickedKebabOption] = useState({
     delete: false,
     addToFolder: false,
@@ -16,8 +15,6 @@ export function KebabContextProvider({ children }) {
   return (
     <KebabContext.Provider
       value={{
-        isKebabClicked,
-        setIsKebabClicked,
         clickedKebabOption,
         setClickedKebabOption,
         closeKebab,
