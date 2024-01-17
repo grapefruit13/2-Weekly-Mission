@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { postSignin } from '@/utils/api';
+import { signin } from '@/utils/api';
 import { getToken, setToken } from '@/utils/auth';
 import { validateEmail } from '@/utils/validation';
 import AuthButton from '@/components/common/auth/AuthButton';
@@ -11,71 +11,63 @@ import styles from '@/styles/auth/auth.module.css';
 
 export default function Signin() {
   const router = useRouter();
-  const [authInfo, setAuthInfo] = useState({
-    email: '',
-    password: '',
-  });
-  const [errorMsg, setErrorMsg] = useState({
-    email: '',
-    password: '',
+  const [form, setForm] = useState({
+    email: {
+      value: '',
+      errorMsg: '',
+    },
+    password: {
+      value: '',
+      errorMsg: '',
+    },
   });
 
   const emailOnBlurInput = (value: string): void => {
     if (!value) {
-      setErrorMsg((prev) => ({
+      setForm((prev) => ({
         ...prev,
-        email: '이메일을 입력해주세요',
+        email: { value: '', errorMsg: '이메일을 입력해주세요' },
       }));
-      setAuthInfo((prev) => ({ ...prev, email: '' }));
       return;
     }
     if (!validateEmail(value)) {
-      setErrorMsg((prev) => ({
+      setForm((prev) => ({
         ...prev,
-        email: '올바른 이메일 주소가 아닙니다.',
+        email: { value: '', errorMsg: '올바른 이메일 주소가 아닙니다.' },
       }));
-      setAuthInfo((prev) => ({ ...prev, email: '' }));
       return;
     }
-    setErrorMsg((prev) => ({
+    setForm((prev) => ({
       ...prev,
-      email: '',
+      email: { value: value, errorMsg: '' },
     }));
-    setAuthInfo((prev) => ({ ...prev, email: value }));
   };
 
   const passwordOnBlurInput = (value: string): void => {
     if (!value) {
-      setErrorMsg((prev) => ({
+      setForm((prev) => ({
         ...prev,
-        password: '비밀번호를 입력해주세요',
+        password: { ...prev.password, errorMsg: '비밀번호를 입력해주세요.' },
       }));
       return;
     }
-    setErrorMsg((prev) => ({
+    setForm((prev) => ({
       ...prev,
-      password: '',
+      password: { value, errorMsg: '' },
     }));
-    setAuthInfo((prev) => ({ ...prev, password: value }));
+    return;
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!authInfo.email || !authInfo.password) return;
-    try {
-      const res = await postSignin({
-        email: authInfo.email,
-        password: authInfo.password,
-      });
-      console.log(res);
-      if (res.accessToken) {
-        setToken(res.accessToken);
-        router.replace('/folder');
-      } else {
-        return;
-      }
-    } catch (e: any) {
-      throw new Error(`signup handleSubmit: ${e}`);
+    if (!form.email.value || !form.password.value) return;
+    const res = await signin({
+      email: form.email.value,
+      password: form.password.value,
+    });
+    if (res.accessToken) {
+      setToken(res.accessToken);
+      router.replace('/folder');
     }
   };
 
@@ -90,21 +82,21 @@ export default function Signin() {
       <form className={styles.authContainer} onSubmit={(e) => handleSubmit(e)}>
         <AuthHeader />
         <TextField
-          label="이메일"
-          type="email"
-          placeholder="이메일을 입력해 주세요"
+          label='이메일'
+          type='email'
+          placeholder='이메일을 입력해 주세요'
           onBlurInput={emailOnBlurInput}
-          errorMsg={errorMsg.email}
+          errorMsg={form.email.errorMsg}
         />
         <TextField
-          label="비밀번호"
-          type="password"
-          placeholder="비밀번호를 입력해주세요"
+          label='비밀번호'
+          type='password'
+          placeholder='비밀번호를 입력해주세요'
           onBlurInput={passwordOnBlurInput}
-          errorMsg={errorMsg.password}
+          errorMsg={form.password.errorMsg}
         />
-        <AuthButton text="로그인" />
-        <SocialLogin text="소셜 로그인" />
+        <AuthButton text='로그인' />
+        <SocialLogin text='소셜 로그인' />
       </form>
     </div>
   );

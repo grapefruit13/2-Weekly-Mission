@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { validateEmail, validatePassword } from '@/utils/validation';
-import { checkDuplicateEmail, postSignup } from '@/utils/api';
+import { checkDuplicateEmail, signup } from '@/utils/api';
 import { getToken, setToken } from '@/utils/auth';
 import TextField from '@/components/common/auth/TextField';
 import AuthHeader from '@/components/common/auth/AuthHeader';
@@ -11,34 +11,34 @@ import styles from '@/styles/auth/auth.module.css';
 
 export default function Signup() {
   const router = useRouter();
-  const [authInfo, setAuthInfo] = useState({
-    email: '',
-    password: '',
-    isPasswordConfirmed: false,
-  });
-  const [errorMsg, setErrorMsg] = useState({
-    email: '',
-    password: '',
-    passwordConfirmation: '',
+  const [form, setForm] = useState({
+    email: {
+      value: '',
+      errorMsg: '',
+    },
+    password: {
+      value: '',
+      errorMsg: '',
+    },
+    passwordConfirmation: {
+      isConfirmed: false,
+      errorMsg: '',
+    },
   });
 
   const getEmailErrorMessage = async (value: string) => {
-    if (!authInfo.email) return;
+    if (!form.email.value) return;
     try {
       const res = await checkDuplicateEmail(value);
       if (res.error) {
-        setErrorMsg((prev) => ({
+        setForm((prev) => ({
           ...prev,
-          email: res.error.message.toString(),
-        }));
-        setAuthInfo((prev) => ({
-          ...prev,
-          email: '',
+          email: { value: '', errorMsg: res.error.message.toString() },
         }));
       } else {
-        setErrorMsg((prev) => ({
+        setForm((prev) => ({
           ...prev,
-          email: '',
+          email: { ...prev.email, errorMsg: '' },
         }));
       }
     } catch (e: any) {
@@ -48,105 +48,97 @@ export default function Signup() {
 
   const emailOnBlurInput = (value: string): void => {
     if (!value) {
-      setErrorMsg((prev) => ({
+      setForm((prev) => ({
         ...prev,
-        email: '이메일을 입력해주세요',
+        email: { value: '', errorMsg: '이메일을 입력하세요' },
       }));
-      setAuthInfo((prev) => ({ ...prev, email: '' }));
       return;
     }
     if (!validateEmail(value)) {
-      setErrorMsg((prev) => ({
+      setForm((prev) => ({
         ...prev,
-        email: '올바른 이메일이 아닙니다.',
+        email: { value: '', errorMsg: '올바른 이메일이 아닙니다.' },
       }));
-      setAuthInfo((prev) => ({ ...prev, email: '' }));
       return;
     }
-    setErrorMsg((prev) => ({
+    setForm((prev) => ({
       ...prev,
-      email: '',
+      email: { value: value, errorMsg: '' },
     }));
-    setAuthInfo((prev) => ({ ...prev, email: value }));
   };
 
   const passwordOnBlurInput = (value: string): void => {
     if (!value) {
-      setErrorMsg((prev) => ({
+      setForm((prev) => ({
         ...prev,
-        password: '비밀번호를 입력해주세요',
+        password: { ...prev.password, errorMsg: '비밀번호를 입력하세요.' },
       }));
-      return;
     }
     if (!validatePassword(value)) {
-      setErrorMsg((prev) => ({
+      setForm((prev) => ({
         ...prev,
-        password: '비밀번호는 영문, 숫자 조합 8자 이상 입력해 주세요.',
+        password: {
+          ...prev.password,
+          errorMsg: '비밀번호는 영문, 숫자 조합 8자 이상 입력해 주세요.',
+        },
       }));
       return;
     }
-    setErrorMsg((prev) => ({
+    setForm((prev) => ({
       ...prev,
-      password: '',
+      password: {
+        value,
+        errorMsg: '',
+      },
     }));
-    setAuthInfo((prev) => ({ ...prev, password: value }));
   };
 
   const passwordConfirmOnBlurInput = (value: string): void => {
     if (!value) {
-      setErrorMsg((prev) => ({
+      setForm((prev) => ({
         ...prev,
-        passwordConfirmation: '비밀번호를 입력해주세요',
-      }));
-      setAuthInfo((prev) => ({
-        ...prev,
-        isPasswordConfirmed: false,
-      }));
-      return;
-    }
-    if (value !== authInfo.password) {
-      setErrorMsg((prev) => ({
-        ...prev,
-        passwordConfirmation: '비밀번호가 일치하지 않아요.',
-      }));
-      setAuthInfo((prev) => ({
-        ...prev,
-        isPasswordConfirmed: false,
+        passwordConfirmation: {
+          isConfirmed: false,
+          errorMsg: '비밀번호를 입력해주세요',
+        },
       }));
       return;
     }
-    setErrorMsg((prev) => ({
+    if (value !== form.password.value) {
+      setForm((prev) => ({
+        ...prev,
+        passwordConfirmation: {
+          isConfirmed: false,
+          errorMsg: '비밀번호가 일치하지 않아요.',
+        },
+      }));
+      return;
+    }
+    setForm((prev) => ({
       ...prev,
-      passwordConfirmation: '',
-    }));
-    setAuthInfo((prev) => ({
-      ...prev,
-      isPasswordConfirmed: true,
+      passwordConfirmation: {
+        isConfirmed: true,
+        errorMsg: '',
+      },
     }));
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!authInfo.isPasswordConfirmed || !authInfo.email) return;
-    try {
-      const res = await postSignup({
-        email: authInfo.email,
-        password: authInfo.password,
-      });
-      if (res.accessToken) {
-        setToken(res.accessToken);
-        router.replace('/folder');
-      } else {
-        return;
-      }
-    } catch (e: any) {
-      throw new Error(`signup handleSubmit: ${e}`);
+    if (!form.passwordConfirmation.isConfirmed || !form.email.value) return;
+    const res = await signup({
+      email: form.email.value,
+      password: form.password.value,
+    });
+    if (res.accessToken) {
+      setToken(res.accessToken);
+      router.replace('/folder');
     }
   };
 
   useEffect(() => {
-    getEmailErrorMessage(authInfo.email);
-  }, [authInfo.email]);
+    getEmailErrorMessage(form.email.value);
+  }, [form.email]);
 
   useEffect(() => {
     const accessToken = getToken();
@@ -159,28 +151,28 @@ export default function Signup() {
       <form className={styles.authContainer} onSubmit={(e) => handleSubmit(e)}>
         <AuthHeader />
         <TextField
-          label="이메일"
-          type="email"
-          placeholder="이메일을 입력해 주세요"
+          label='이메일'
+          type='email'
+          placeholder='이메일을 입력해 주세요'
           onBlurInput={emailOnBlurInput}
-          errorMsg={errorMsg.email}
+          errorMsg={form.email.errorMsg}
         />
         <TextField
-          label="비밀번호"
-          type="password"
-          placeholder="영문, 숫자를 조합해 8자 이상 입력해 주세요"
+          label='비밀번호'
+          type='password'
+          placeholder='영문, 숫자를 조합해 8자 이상 입력해 주세요'
           onBlurInput={passwordOnBlurInput}
-          errorMsg={errorMsg.password}
+          errorMsg={form.password.errorMsg}
         />
         <TextField
-          label="비밀번호 확인"
-          type="password"
-          placeholder="비밀번호와 일치하는 값을 입력해주세요"
+          label='비밀번호 확인'
+          type='password'
+          placeholder='비밀번호와 일치하는 값을 입력해주세요'
           onBlurInput={passwordConfirmOnBlurInput}
-          errorMsg={errorMsg.passwordConfirmation}
+          errorMsg={form.passwordConfirmation.errorMsg}
         />
-        <AuthButton text="회원가입" />
-        <SocialLogin text="다른 방식으로 가입하기" />
+        <AuthButton text='회원가입' />
+        <SocialLogin text='다른 방식으로 가입하기' />
       </form>
     </div>
   );
