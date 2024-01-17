@@ -14,10 +14,10 @@ export default function SearchBar() {
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Backspace' && router.query.keyword === '') {
-      setKeyword(router.query);
+      setKeyword(router.query.keyword);
     }
     if (e.key === 'Enter') {
-      setKeyword(router.query);
+      setKeyword(router.query.keyword);
       if (!router.query.keyword) return;
       setIsSearchResultShowed(true);
     }
@@ -59,19 +59,19 @@ export default function SearchBar() {
           className={`${styles.searchbarInput} ${
             isSearchActive ? styles.active : styles.inactive
           }`}
-          name="keyword"
-          type="text"
-          placeholder="링크를 검색해 보세요."
+          name='keyword'
+          type='text'
+          placeholder='링크를 검색해 보세요.'
           onChange={(e) => handleKeywordChange(e)}
           onKeyDown={(e) => handleKeyDown(e)}
         />
         <button onClick={handleButtonClick}>
           <Image
             className={styles.closeButton}
-            src="/assets/icons/search/close.svg"
+            src='/assets/icons/search/close.svg'
             width={24}
             height={24}
-            alt="reset-addLink"
+            alt='reset-addLink'
           />
         </button>
       </div>
