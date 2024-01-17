@@ -4,27 +4,28 @@ import styles from '@/styles/auth/auth.module.css';
 
 export default function Input({
   type,
-  name,
   placeholder,
-  onClick,
   onBlurInput,
   errorMsg,
 }: {
   type: string;
-  name?: string;
   placeholder: string;
-  onClick?: any;
   onBlurInput: (value: string) => any;
   errorMsg: string;
 }) {
-  const [isEyeClicked, setIsEyeClicked] = useState(false);
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const [inputValue, setInputValue] = useState('');
 
   const handleEyeClick = () => {
-    setIsEyeClicked((prev) => !prev);
+    setIsPasswordVisible((prev) => !prev);
   };
 
-  const handleOnBlur = (e: React.FocusEvent<HTMLInputElement, Element>) => {
-    onBlurInput(e.target.value);
+  const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.target.value);
+  };
+
+  const handleOnBlur = () => {
+    onBlurInput(inputValue);
   };
 
   return (
@@ -32,9 +33,10 @@ export default function Input({
       <div className={styles.inputBox}>
         <input
           placeholder={placeholder}
-          onBlur={(e) => handleOnBlur(e)}
+          onChange={(e) => handleOnChange(e)}
+          onBlur={handleOnBlur}
           name={type}
-          type={type === 'password' && isEyeClicked ? 'text' : type}
+          type={type === 'password' && isPasswordVisible ? 'text' : type}
           className={
             errorMsg
               ? `${styles.textfieldInput} ${styles.errorInput}`
@@ -43,23 +45,23 @@ export default function Input({
         />
         {type === 'password' && (
           <button
-            type="button"
+            type='button'
             className={styles.eyeToggleButton}
             onClick={handleEyeClick}
           >
-            {isEyeClicked ? (
+            {isPasswordVisible ? (
               <Image
-                src="/assets/icons/auth/eye-on.svg"
+                src='/assets/icons/auth/eye-on.svg'
                 width={16}
                 height={16}
-                alt="eye-on"
+                alt='eye-on'
               />
             ) : (
               <Image
-                src="/assets/icons/auth/eye-off.svg"
+                src='/assets/icons/auth/eye-off.svg'
                 width={16}
                 height={16}
-                alt="eye-off"
+                alt='eye-off'
               />
             )}
           </button>
