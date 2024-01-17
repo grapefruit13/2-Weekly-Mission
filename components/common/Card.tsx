@@ -8,18 +8,16 @@ import NoImg from '@/public/assets/icons/card/card_no-img.svg';
 import kebab from '@/public/assets/icons/card/kebab.svg';
 import styles from '@/styles/card/card.module.css';
 
-interface Link {
-  link: {
-    id: string;
-    createdAt: string;
-    url: string;
-    title: string;
-    description: string;
-    imageSource: string;
-  };
+interface LinkProps {
+  id: string;
+  createdAt: string;
+  url: string;
+  title: string;
+  description: string;
+  imageSource: string;
 }
 
-export default function Card({ link }: Link) {
+export default function Card({ link }: { link: LinkProps }) {
   const { id, createdAt, url, title, description, imageSource } = link;
   const [linkInfo, setLinkInfo] = useState({
     id: '',
@@ -43,7 +41,7 @@ export default function Card({ link }: Link) {
     });
   };
 
-  const getCreatedAt = useMemo(() => {
+  const yearMonthDay = useMemo(() => {
     const [year, month, day] = calCreatedDates(createdAt);
     setMins(calCreatedAt(year, month, day));
     return { year, month, day };
@@ -92,7 +90,7 @@ export default function Card({ link }: Link) {
           imgSrc={kebab}
           title={title}
           description={description}
-          createdDates={getCreatedAt}
+          createdDates={yearMonthDay}
           linkInfo={linkInfo}
         />
       </div>
