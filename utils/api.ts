@@ -22,20 +22,28 @@ export async function checkDuplicateEmail(email: string) {
   }
 }
 
-export async function postSignup(data: { email: string; password: string }) {
+export async function signup(data: { email: string; password: string }) {
   try {
     const res = await axios.post('/sign-up', data);
     return res.data.data;
   } catch (e: any) {
-    if (e.response) return e.response.data;
+    if (!e.response) {
+      alert('회원가입에 실패했습니다.');
+    } else {
+      return e.response.data;
+    }
   }
 }
 
-export async function postSignin(data: { email: string; password: string }) {
+export async function signin(data: { email: string; password: string }) {
   try {
     const res = await axios.post('/sign-in', data);
     return res.data.data;
   } catch (e: any) {
-    if (e.response) return e.response.data;
+    if (!e.response) {
+      alert('로그인에 실패했습니다.');
+    } else {
+      return e.response.data;
+    }
   }
 }
