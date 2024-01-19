@@ -9,8 +9,11 @@ import CardWrapper from '@/components/common/CardWrapper';
 import styles from '@/styles/header/mainHeader.module.css';
 
 export default function Shared() {
-  const { keyword, filteredLinks, setFilteredLinks } =
-    useContext(FolderContext);
+  const folderContext = useContext(FolderContext);
+  if (!folderContext) {
+    return null;
+  }
+  const { keyword, filteredLinks, setFilteredLinks } = folderContext;
   const [profileData, setProfileData] = useState({
     id: 0,
     name: '',
