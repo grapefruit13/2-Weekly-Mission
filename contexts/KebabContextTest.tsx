@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, createContext, useState } from 'react';
 
-interface KebabContextProps {
+interface KebabContextTestProps {
   clickedKebabOption: {
     delete: boolean;
     addToFolder: boolean;
@@ -14,9 +14,11 @@ interface KebabContextProps {
   closeKebab: () => void;
 }
 
-const KebabContext = createContext<KebabContextProps | undefined>(undefined);
+const KebabContextTest = createContext<KebabContextTestProps | undefined>(
+  undefined,
+);
 
-export function KebabContextProvider({ children }: any) {
+export function KebabContextTestProvider({ children }: any) {
   const [clickedKebabOption, setClickedKebabOption] = useState({
     delete: false,
     addToFolder: false,
@@ -27,7 +29,7 @@ export function KebabContextProvider({ children }: any) {
   };
 
   return (
-    <KebabContext.Provider
+    <KebabContextTest.Provider
       value={{
         clickedKebabOption,
         setClickedKebabOption,
@@ -35,8 +37,8 @@ export function KebabContextProvider({ children }: any) {
       }}
     >
       {children}
-    </KebabContext.Provider>
+    </KebabContextTest.Provider>
   );
 }
 
-export default KebabContext;
+export default KebabContextTest;

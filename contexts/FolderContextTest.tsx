@@ -23,15 +23,33 @@ interface FolderContextProps {
   setFolderList: Dispatch<SetStateAction<{}[]>>;
   keyword: string;
   setKeyword: Dispatch<SetStateAction<string>>;
-  filteredLinks: {}[];
-  setFilteredLinks: Dispatch<SetStateAction<{}[]>>;
+  filteredLinks: {
+    id: string;
+    createdAt: string;
+    url: string;
+    title: string;
+    description: string;
+  }[];
+  setFilteredLinks: Dispatch<
+    SetStateAction<
+      {
+        id: string;
+        createdAt: string;
+        url: string;
+        title: string;
+        description: string;
+      }[]
+    >
+  >;
   isSearchResultShowed: boolean;
   setIsSearchResultShowed: Dispatch<SetStateAction<boolean>>;
 }
 
-const FolderContext = createContext<FolderContextProps | undefined>(undefined);
+const FolderContextTest = createContext<FolderContextProps | undefined>(
+  undefined,
+);
 
-export function FolderContextProvider({ children }: any) {
+export function FolderContextTestProvider({ children }: any) {
   const [folderList, setFolderList] = useState<{}[]>([]);
   const [clickedOption, setClickedOption] = useState({
     addFolderLink: false,
@@ -42,11 +60,19 @@ export function FolderContextProvider({ children }: any) {
   });
   const [addedLink, setAddedLink] = useState('');
   const [keyword, setKeyword] = useState('');
-  const [filteredLinks, setFilteredLinks] = useState<{}[]>([]);
+  const [filteredLinks, setFilteredLinks] = useState<
+    {
+      id: string;
+      createdAt: string;
+      url: string;
+      title: string;
+      description: string;
+    }[]
+  >([]);
   const [isSearchResultShowed, setIsSearchResultShowed] = useState(false);
 
   return (
-    <FolderContext.Provider
+    <FolderContextTest.Provider
       value={{
         clickedOption,
         setClickedOption,
@@ -63,8 +89,8 @@ export function FolderContextProvider({ children }: any) {
       }}
     >
       {children}
-    </FolderContext.Provider>
+    </FolderContextTest.Provider>
   );
 }
 
-export default FolderContext;
+export default FolderContextTest;
