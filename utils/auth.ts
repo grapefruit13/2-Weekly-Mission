@@ -1,5 +1,9 @@
 export const getToken = () => {
-  return localStorage.getItem('accessToken');
+  const accessToken =
+    typeof localStorage !== 'undefined'
+      ? localStorage.getItem('accessToken')
+      : null;
+  return accessToken;
 };
 
 export const setToken = (token: string) => {
