@@ -55,7 +55,7 @@ export default function Card({ link }: { link: LinkProps }) {
     <KebabContextProvider>
       <div className={styles.flexWrapper} id={`card-${id}`}>
         <div className={styles.cardImgWrapper}>
-          <Link target="_blank" href={url}>
+          <Link target='_blank' href={url}>
             {imageSource ? (
               <Image
                 className={

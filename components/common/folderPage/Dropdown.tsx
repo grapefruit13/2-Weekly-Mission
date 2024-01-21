@@ -25,7 +25,7 @@ export default function Dropdown({
       <div className={styles.container}>
         {clickedKebabOption.delete && (
           <Modal
-            title="링크 삭제"
+            title='링크 삭제'
             subtitle={linkInfo.url}
             button={{ color: 'red', text: '삭제하기' }}
             closeKebab={closeKebab}
@@ -33,7 +33,7 @@ export default function Dropdown({
         )}
         {clickedKebabOption.addToFolder && (
           <Modal
-            title="폴더에 추가"
+            title='폴더에 추가'
             button={{ color: 'blue', text: '추가하기' }}
             subtitle={linkInfo.url}
             closeKebab={closeKebab}
