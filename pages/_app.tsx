@@ -1,5 +1,7 @@
 import type { AppProps } from 'next/app';
 import '@/styles/globals.css';
+import '@/styles/main/main.css';
+
 import { FolderContextProvider } from '@/contexts/FolderContext';
 import Footer from '@/components/common/Footer';
 

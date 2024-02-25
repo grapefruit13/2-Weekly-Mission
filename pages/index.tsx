@@ -1,104 +1,102 @@
-import { useContext, useEffect, useState } from 'react';
-import Head from 'next/head';
-import { filterByKeyword } from '@/utils/searchUtils';
-import { getData } from '@/utils/api';
-import FolderContext from '@/contexts/FolderContext';
-import Header from '@/components/common/Header';
-import MainHeader from '@/components/common/sharedPage/MainHeader';
-import SearchBar from '@/components/common/SearchBar';
-import CardWrapper from '@/components/common/CardWrapper';
-import styles from '@/styles/card/cardWrapper.module.css';
+import Image from 'next/image';
+import IMGS from '@/constants/importImg';
+import Link from 'next/link';
 
 export default function Home() {
-  const { keyword, filteredLinks, setFilteredLinks } =
-    useContext(FolderContext);
-  const [profileData, setProfileData] = useState({
-    id: 0,
-    name: '',
-    email: '',
-    image_source: '',
-  });
-  const [folder, setFolder] = useState<{
-    id: string;
-    name: string;
-    owner: {
-      id: number;
-      name: string;
-      profileImageSource: string;
-    };
-    links?: {
-      id: number;
-      createdAt: string;
-      url: string;
-      title: string;
-      description: string;
-    }[];
-  }>({
-    id: '',
-    name: '',
-    owner: { id: 0, name: '', profileImageSource: '' },
-  });
-
-  const getSampleUserData = async () => {
-    try {
-      const response = await getData('sample/user');
-      const { id, name, email, profileImageSource } = response;
-      setProfileData((prevProfileData) => ({
-        ...prevProfileData,
-        id: id,
-        name: name,
-        email: email,
-        image_source: profileImageSource,
-      }));
-    } catch (e) {
-      throw new Error(`getSampleUserData ${e} 오류`);
-    }
-  };
-
-  const getLinks = async () => {
-    try {
-      const result = await getData('sample/folder');
-      const foldersData = result.folder;
-      setFolder(foldersData);
-    } catch (e) {
-      throw new Error(`getLinks에서 ${e} 오류`);
-    }
-  };
-
-  useEffect(() => {
-    getSampleUserData();
-    getLinks();
-  }, []);
-
-  useEffect(() => {
-    setFilteredLinks(filterByKeyword(folder.links, keyword));
-  }, [keyword]);
-
   return (
     <>
-      <Head>
-        <title>Linkbrary</title>
-        <meta name='og:url' content='https://www.linkbrary.com' />
-        <meta name='og:title' content='Linkbrary' />
-        <meta
-          property='og:description'
-          content='세상의 모든 정보를 쉽게 저장하고 관리해 보세요'
-        />
-        <meta
-          property='og:image'
-          content='https://i.namu.wiki/i/8JbLEOm1EezAZzdujEwIA8rvaHFgPyqA3lUfr0HQXQ3T9tVClLGppcw82RTpyguF18pYI4ysHX9C0yzkb6G_7A.webp'
-        />
-        <meta name='viewport' content='width=device-width, initial-scale=1' />
-      </Head>
+      <header>
+        <nav>
+          <div className='logo'>
+            <Link href='/'>
+              <Image src={IMGS.logo.src} alt={IMGS.logo.alt} />
+            </Link>
+          </div>
+          <Link href='/signin'>
+            <button className='login-button button'>로그인</button>
+          </Link>
+        </nav>
+      </header>
+
       <main>
-        <Header profileData={profileData} />
-        <MainHeader folderData={folder} />
-        <div className={styles.mainWrapper}>
-          <SearchBar />
-          <CardWrapper
-            links={keyword && filteredLinks ? filteredLinks : folder.links}
-          />
-        </div>
+        <article className='main-article'>
+          <div className='main-text'>
+            <span>
+              <span className='text-highlight'>세상의 모든 정보</span>를<br />
+              쉽게 저장하고 관리해 보세요
+            </span>
+          </div>
+          <button className='link-add-button button'>링크 추가하기</button>
+          <div className='article-img_container'>
+            <Image src={IMGS.s1.src} alt={IMGS.s1.alt} objectFit='cover' />
+          </div>
+        </article>
+
+        <section className='section2 flex-center'>
+          <div className='container'>
+            <div className='sub-text'>
+              <span>
+                <span className='text-highlight'>원하는 링크</span>를 저장하세요
+              </span>
+              <p>
+                나중에 읽고 싶은 글, 다시 보고 싶은 영상, 사고 싶은 옷, 기억하고
+                싶은 모든 것을 한 공간에 저장하세요.
+              </p>
+            </div>
+            <div className='sub-img'>
+              <Image src={IMGS.s2.src} alt={IMGS.s2.alt} objectFit='cover' />
+            </div>
+          </div>
+        </section>
+
+        <section className='section3 flex-center'>
+          <div className='container'>
+            <div className='sub-img'>
+              <Image src={IMGS.s3.src} alt={IMGS.s3.alt} objectFit='cover' />
+            </div>
+            <div className='sub-text'>
+              <span>
+                링크를 폴더로
+                <span className='text-highlight'>관리</span>하세요
+              </span>
+              <p>
+                나만의 폴더를 무제한으로 만들고 다양하게 활용할 수 있습니다.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section className='section4 flex-center'>
+          <div className='container'>
+            <div className='sub-text'>
+              <span>
+                저장한 링크를
+                <span className='text-highlight'>공유</span>해보세요
+              </span>
+              <p>
+                나만의 폴더를 무제한으로 만들고 다양하게 활용할 수 있습니다.
+              </p>
+            </div>
+            <div className='sub-img'>
+              <Image src={IMGS.s4.src} alt={IMGS.s4.alt} objectFit='cover' />
+            </div>
+          </div>
+        </section>
+
+        <section className='section5 flex-center'>
+          <div className='container'>
+            <div className='sub-img'>
+              <Image src={IMGS.s5.src} alt={IMGS.s5.alt} objectFit='cover' />
+            </div>
+            <div className='sub-text'>
+              <span>
+                저장한 링크를
+                <span className='text-highlight'>검색</span>해 보세요
+              </span>
+              <p>중요한 정보들을 검색으로 쉽게 찾아보세요.</p>
+            </div>
+          </div>
+        </section>
       </main>
     </>
   );
