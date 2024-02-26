@@ -44,3 +44,5 @@ export const Folder = {
     }
   },
 };
+
+export default Folder;

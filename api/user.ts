@@ -1,7 +1,7 @@
-import instance from '@/api/axios';
 import { USERS_API } from '@/constants';
+import instance from './axios';
 
-const User = {
+export const User = {
   // 현재 유저 조회
   get: async () => {
     try {

@@ -3,7 +3,7 @@ import { getToken } from '@/utils';
 
 const accessToken = getToken();
 
-const instance = axios.create({
+export const instance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BASE_URL,
   timeout: 5000,
   headers: {

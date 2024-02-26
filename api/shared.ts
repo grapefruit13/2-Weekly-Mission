@@ -35,3 +35,5 @@ export const Shared = {
     }
   },
 };
+
+export default Shared;

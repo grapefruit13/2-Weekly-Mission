@@ -6,7 +6,7 @@ import {
 } from '@/constants';
 import instance from './axios';
 
-const Auth = {
+export const Auth = {
   signup: async (data: { email: string; password: string }) => {
     try {
       const res = await instance.post(SIGN_UP_API, data);
@@ -56,3 +56,5 @@ const Auth = {
     }
   },
 };
+
+export default Auth;
